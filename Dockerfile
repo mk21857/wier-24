@@ -10,9 +10,10 @@ RUN echo "source activate $ENV_NAME" >> ~/.bashrc
 ENV PATH /opt/conda/envs/$ENV_NAME/bin:$PATH
 
 # Install dependencies
-RUN conda install -n $ENV_NAME selenium psycopg2 nb_conda requests -y
+RUN conda install -n $ENV_NAME selenium nb_conda requests -y
 RUN conda install -n $ENV_NAME -c anaconda flask pyopenssl -y
 RUN conda install -n $ENV_NAME -c conda-forge flask-httpauth -y
+RUN /opt/conda/envs/$ENV_NAME/bin/pip install psycopg2-binary
 
 # Set working directory
 WORKDIR /app
