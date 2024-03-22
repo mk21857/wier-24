@@ -8,3 +8,5 @@ https://www.youtube.com/watch?v=_apkTbq6grk
 `> docker compose up`
 ## Access Jupyter Notebook environment
 `localhost:8888`
+## Disclaimer
+If any of the docker compose build installations fail, try re-running the command.
