@@ -1,11 +1,15 @@
 version: '3'
 services:
   db:
-    image: postgres
+    image: postgres:12.2
     environment:
-      POSTGRES_PASSWORD: example
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: SecretPassword
     volumes:
-      - ./crawldb.sql:/docker-entrypoint-initdb.d/crawldb.sql
+      - ./pgdata:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
   app:
     build: 
       context: .
