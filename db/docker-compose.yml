@@ -3,20 +3,24 @@ services:
   db:
     image: postgres:12.2
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: SecretPassword
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./pgdata:/var/lib/postgresql/data
       - ./init-scripts:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
-  app:
+
+  api:
     build: 
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8888:8888"
-    volumes:
-      - .:/app
+      - "5000:5000"
     depends_on:
       - db
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
