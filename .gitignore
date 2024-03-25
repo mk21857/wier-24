@@ -1,5 +1,4 @@
 *.ipynb_checkpoints/
 *.log
-pgdata/
 .env
-db/create_user.py
+creds/*
