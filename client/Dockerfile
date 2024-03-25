@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y firefox-esr
 WORKDIR /app
 
 # Copy project files into the container
-COPY . .
+COPY ./src/ /app
 
 # Add the directory containing GeckoDriver to the PATH
 ENV PATH="/app:${PATH}"
