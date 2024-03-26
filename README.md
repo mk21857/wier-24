@@ -8,7 +8,7 @@
 # About the project
 The project is a web crawler that utilizes Selenium and other libraries to scrape data from websites. It communicates with a PostgreSQL database hosted on the cloud through a Flask API. The entire project is containerized using Docker for easy deployment and scalability.
 
-# Running the web crawler
+# Web crawler architecture
 
 The web crawler is part of a larger project architecture that is split into three Docker containers. These containers are managed by a centralized Docker Compose file.
 
@@ -21,6 +21,7 @@ The API container hosts a Flask API that acts as the communication layer between
 ## Cloud SQL Database
 The project utilizes a PostgreSQL database hosted on the cloud. The API container communicates with the database through the Cloud SQL Proxy, which provides a secure and reliable connection.
 
+# Running the project locally
 To run the web crawler and the entire project, follow these steps:
 
 1. Create and configure the `.env` file in the root directory. This file should contain the necessary environment variables for the project, such as database credentials and service account file name.
