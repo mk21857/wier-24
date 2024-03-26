@@ -8,20 +8,24 @@ basic_auth = HTTPBasicAuth()
 
 @basic_auth.verify_password
 def verify_password(username, password):
-    conn = dbo.get_database_connection()
-    cur = conn.cursor()
+    # ? Simple development authentication placeholder
+    return username == 'admin' and password == 'admin'
 
-    cur.execute("SELECT password FROM users WHERE username = %s", (username,))
-    user_data = cur.fetchone()
+    # ? Checking user in database
+    # conn = dbo.get_database_connection()
+    # cur = conn.cursor()
 
-    if user_data:
-        hashed_password = user_data[0]
-        if bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8')):
-            return username
+    # cur.execute("SELECT password FROM users WHERE username = %s", (username,))
+    # user_data = cur.fetchone()
 
-    cur.close()
-    conn.close()
-    return None
+    # if user_data:
+    #     hashed_password = user_data[0]
+    #     if bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8')):
+    #         return username
+
+    # cur.close()
+    # conn.close()
+    # return None
 
 @basic_auth.error_handler
 def basic_auth_error(status):
@@ -35,18 +39,20 @@ def not_found_error(error):
 def internal_error(error):
     return jsonify({"success": False, "message": "Server error!"}), 500
 
-@app.route("/")
+@app.route("/" , methods=['GET'])
+@basic_auth.login_required
 def hello_world():
     retVal = dbo.test_db_connection()
-    print(retVal)
     return jsonify(retVal)
 
-@app.route("/create_tables")
+@app.route("/create_tables", methods=['POST'])
+@basic_auth.login_required
 def create_tables():
     dbo.execute_sql_script()
     return jsonify({"success": True})
 
-@app.route("/tables")
+@app.route("/get_tables", methods=['GET'])
+@basic_auth.login_required
 def get_tables():
     tables = dbo.get_all_tables()
     return jsonify(tables)
@@ -58,7 +64,7 @@ def fl_restart():
     return jsonify({"success": True})
 
 @app.route('/db/get_values', methods=['GET'])
-# @basic_auth.login_required
+@basic_auth.login_required
 def fl_get_values():
     retVal = dbo.print_db_values()
     return jsonify(retVal)

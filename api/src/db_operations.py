@@ -45,7 +45,7 @@ def test_db_connection():
     try:
         conn = get_database_connection()
         conn.close()
-        return {"success": True}
+        return {"success": True, "message": "Connected to database!"}
     except psycopg2.Error as e:
         return {"success": False, "error": str(e)}
 
