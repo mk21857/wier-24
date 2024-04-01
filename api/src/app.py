@@ -8,24 +8,8 @@ basic_auth = HTTPBasicAuth()
 
 @basic_auth.verify_password
 def verify_password(username, password):
-    # ? Simple development authentication placeholder
+    # Simple development authentication placeholder
     return username == 'admin' and password == 'admin'
-
-    # ? Checking user in database
-    # conn = dbo.get_database_connection()
-    # cur = conn.cursor()
-
-    # cur.execute("SELECT password FROM users WHERE username = %s", (username,))
-    # user_data = cur.fetchone()
-
-    # if user_data:
-    #     hashed_password = user_data[0]
-    #     if bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8')):
-    #         return username
-
-    # cur.close()
-    # conn.close()
-    # return None
 
 @basic_auth.error_handler
 def basic_auth_error(status):
@@ -33,53 +17,43 @@ def basic_auth_error(status):
 
 @app.errorhandler(404)
 def not_found_error(error):
-    return jsonify({"success": False, "message": "Object not found!"}), 404
+    return jsonify({"success": False, "message": "Object not found!", "error": error}), 404
 
 @app.errorhandler(500)
 def internal_error(error):
-    return jsonify({"success": False, "message": "Server error!"}), 500
+    return jsonify({"success": False, "message": "Server error!", "error": error}), 500
 
-@app.route("/" , methods=['GET'])
+@app.route("/", methods=['GET'])
+def home():
+    with open('index.html', 'r') as file:
+        html_content = file.read()
+        print(html_content)
+    return html_content
+
+@app.route("/test_connection" , methods=['GET'])
 @basic_auth.login_required
-def hello_world():
+def test_connection():
     retVal = dbo.test_db_connection()
     return jsonify(retVal)
 
-@app.route("/create_tables", methods=['POST'])
+@app.route("/execute_script/<string:script_name>", methods=['POST'])
 @basic_auth.login_required
-def create_tables():
-    dbo.execute_sql_script()
-    return jsonify({"success": True})
+def execute_script(script_name):
+    retVal = dbo.execute_sql_script(script_name)
+    return jsonify(retVal)
+
+@app.route("/drop_db", methods=['POST'])
+@basic_auth.login_required
+def drop_db():
+    # retVal = dbo.drop_database()
+    # return jsonify(retVal)
+    return jsonify({"success": False, "error": "This operation is disabled! Enable it by commenting out the code."})
 
 @app.route("/get_tables", methods=['GET'])
 @basic_auth.login_required
 def get_tables():
     tables = dbo.get_all_tables()
     return jsonify(tables)
-
-@app.route('/db/reset', methods=['POST'])
-@basic_auth.login_required
-def fl_restart():
-    dbo.reset_db_values()
-    return jsonify({"success": True})
-
-@app.route('/db/get_values', methods=['GET'])
-@basic_auth.login_required
-def fl_get_values():
-    retVal = dbo.print_db_values()
-    return jsonify(retVal)
-    
-@app.route('/db/increase/<int:id>', methods=['POST'])
-@basic_auth.login_required
-def fl_inc_vals(id):
-    dbo.increase_db_values(id)
-    return jsonify({"success": True})
-
-@app.route('/db/increase_locking/<int:id>', methods=['POST'])
-@basic_auth.login_required
-def fl_inc_vals_lock(id):
-    dbo.increase_db_values_locking(id)
-    return jsonify({"success": True})
 
 if __name__ == '__main__':
     app.run(ssl_context='adhoc')

@@ -25,91 +25,50 @@ def get_database_connection():
         print(f"Error connecting to database: {e}")
         raise e
 
-def execute_sql_script():
-    try:
-        conn = get_database_connection()
-        cur = conn.cursor()
-
-        with open('/app/init-scripts/database.sql', 'r') as script_file:
-            cur.execute(script_file.read())
-
-        conn.commit()
-        cur.close()
-        conn.close()
-        print("SQL script executed successfully!")
-    except Exception as e:
-        print(f"Error executing SQL script: {e}")
-        raise e
-
 def test_db_connection():
     try:
         conn = get_database_connection()
         conn.close()
-        return {"success": True, "message": "Connected to database!"}
+        return {"success": True, "message": "Connection to database successful!"}
     except psycopg2.Error as e:
         return {"success": False, "error": str(e)}
 
-def get_all_tables():
-    conn = get_database_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'")
-    tables = cur.fetchall()
-    all_tables = [table[0] for table in tables]
-    return all_tables
+def execute_sql_script(script_file_path):
+    try:
+        script_path = f'/app/init-scripts/{script_file_path}'
+        if os.path.exists(script_path):
+            with open(script_path, 'r') as script_file:
+                conn = get_database_connection()
+                cur = conn.cursor()
+                cur.execute(script_file.read())
+                conn.commit()
+                cur.close()
+                conn.close()
+                return {"success": True, "message": f"Script '{script_file_path}' executed successfully!"}
+        else:
+            return {"success": False, "error": f"Script '{script_file_path}' does not exist."}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
 
-def reset_db_values():
-    conn = get_database_connection()
-    conn.autocommit = True
-    
-    cur = conn.cursor()
-    cur.execute("UPDATE showcase.counters SET value = 0")
-    
-    cur.close()
-    conn.close()
-    
-def print_db_values():
-    print("Getting connection")
-    conn = get_database_connection()
-    print("Got connection")
-    conn.autocommit = True
-
-    retVal = []
-    print("\nValues in the database:")
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM crawldb.site")
-    rows = cur.fetchall()
-    for row in rows:
-        site_id = row
-        print(f"\tSite ID: {site_id}")
-        retVal.append({'site_id': site_id})
-    cur.close()
-    conn.close()
-    return retVal
-
-
-def increase_db_values(counter_id):
-    conn = get_database_connection()
-    conn.autocommit = True
-    
-    cur = conn.cursor()
-    cur.execute("SELECT value FROM showcase.counters WHERE counter_id = %s", \
-                (counter_id,))
-    value = cur.fetchone()[0]
-    cur.execute("UPDATE showcase.counters SET value = %s WHERE counter_id = %s", \
-                (value+1, counter_id))
-    cur.close()
-    conn.close()
-    
-def increase_db_values_locking(counter_id):
-    conn = get_database_connection()
-    conn.autocommit = True
-
-    with lock:
+def drop_database():
+    try:
+        conn = get_database_connection()
+        conn.autocommit = True
         cur = conn.cursor()
-        cur.execute("SELECT value FROM showcase.counters WHERE counter_id = %s", \
-                    (counter_id,))
-        value = cur.fetchone()[0]
-        cur.execute("UPDATE showcase.counters SET value = %s WHERE counter_id = %s", \
-                    (value+1, counter_id))
+        cur.execute(f"DROP DATABASE IF EXISTS {os.environ.get('CLOUD_SQL_DATABASE')}")
         cur.close()
-    conn.close()
+        conn.close()
+        return {"success": True, "message": f"Database '{os.environ.get('CLOUD_SQL_DATABASE')}' dropped successfully!"}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+def get_all_tables():
+    try:
+        conn = get_database_connection()
+        cur = conn.cursor()
+        cur.execute(f"SELECT table_name FROM information_schema.tables WHERE table_schema = '{os.environ.get('CLOUD_SQL_DATABASE')}'")
+        tables = cur.fetchall()
+        all_tables = [table[0] for table in tables]
+        return {"success": True, "message": f"Successfully retrieved all tables from '{os.environ.get('CLOUD_SQL_DATABASE')}'.", "data": all_tables}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
