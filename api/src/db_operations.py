@@ -5,11 +5,11 @@ import threading
 lock = threading.Lock()
 
 def get_database_connection():
-    host = "cloudsql-proxy"
-    port = 5432
-    database = "crawldb"
-    user = "postgres"
-    password = "pajki-wier24"
+    host = os.environ.get("CLOUD_SQL_HOST")
+    port = int(os.environ.get("CLOUD_SQL_PORT"))
+    database = os.environ.get("CLOUD_SQL_DATABASE")
+    user = os.environ.get("CLOUD_SQL_USER")
+    password = os.environ.get("CLOUD_SQL_PASSWORD")
 
     try:
         conn = psycopg2.connect(
