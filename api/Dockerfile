@@ -11,4 +11,4 @@ COPY ./src/ /app
 RUN pip install --no-cache-dir Flask Flask-HTTPAuth psycopg2-binary cryptography bcrypt google-auth python-dotenv
 
 # Entrypoint for your Flask application
-ENTRYPOINT ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=5000", "--cert=adhoc"]
+ENTRYPOINT ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=5000", "--cert=adhoc", "--debugger", "--reload"]
