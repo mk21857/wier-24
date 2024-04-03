@@ -8,7 +8,7 @@ def connect_to_database():
             password="postgres123",
             host="localhost",
             port="5432",
-            database="postgres" 
+            database="postgres"
         )
         print("Connected to the database successfully.")
         return connection
@@ -44,15 +44,14 @@ def get_frontier_pages(conn):
             "SELECT id, url FROM crawldb.page ",
             "WHERE page_type_code = 'FRONTIER' ",
             "ORDER BY id"
-            )
+        )
         return cursor.fetchall()
     except Exception as e:
         print("Error while fetching frontier pages:", e)
         return []
-    
 
-def insert_site_data(conn, domain, robots_content, sitemap_content, 
-                     ip_address):
+
+def insert_site(conn, domain, robots_content, sitemap_content, ip_address):
     try:
         cursor = conn.cursor()
         cursor.execute(
@@ -74,7 +73,7 @@ def insert_site_data(conn, domain, robots_content, sitemap_content,
             cursor.close()
 
 
-def insert_image_data(conn, url, filename, content_type, accessed_time):
+def insert_image(conn, url, filename, content_type, accessed_time):
     try:
         cursor = conn.cursor()
         cursor.execute(
@@ -97,7 +96,7 @@ def insert_image_data(conn, url, filename, content_type, accessed_time):
             cursor.close()
 
 
-def insert_page_into_frontier(conn, domain, url, page_type='FRONTIER', 
+def insert_page_into_frontier(conn, domain, url, page_type='FRONTIER',
                               from_page=None):
     try:
         cursor = conn.cursor()
@@ -136,3 +135,54 @@ def insert_page_into_frontier(conn, domain, url, page_type='FRONTIER',
     finally:
         if cursor is not None:
             cursor.close()
+
+
+def get_frontier_length():
+    try:
+        conn = connect_to_database()
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT COUNT(*) FROM crawldb.page ",
+            "WHERE page_type_code = 'FRONTIER'"
+        )
+        length = cursor.fetchone()[0]
+        print("Frontier length:", length)
+        return length
+    except Exception as e:
+        print("Error while fetching frontier length:", e)
+        return 0
+    finally:
+        if cursor is not None:
+            cursor.close()
+        close_connection(conn)
+
+
+def update_page_data(conn, url, page_type):
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE crawldb.page SET page_type_code = %s ",
+            "WHERE url = %s",
+            (page_type, url)
+        )
+        conn.commit()
+        print("Page data updated successfully.")
+    except Exception as e:
+        print("Error while updating page data:", e)
+        conn.rollback()
+    finally:
+        if cursor is not None:
+            cursor.close()
+
+
+if __name__ == "__main__":
+    connection = connect_to_database()
+    # execute_query(connection, "INSERT INTO crawldb.data_type (code)"
+    #              " VALUES ('IMG');")
+    query = "SELECT * FROM crawldb.data_type;"
+    records = execute_query(connection, query)
+    if records:
+        print("Values in crawldb.data_type table:")
+        for row in records:
+            print(row)
+    close_connection(connection)
