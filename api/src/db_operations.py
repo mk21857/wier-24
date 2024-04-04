@@ -90,19 +90,22 @@ def get_all_tables():
         return {"success": False, "error": str(e)}
 
 
-def get_frontier_pages(conn):
+def get_frontier_pages():
     try:
-        cursor = conn.cursor()
-        cursor.execute(
+        conn = get_database_connection()
+        cur = conn.cursor()
+        cur.execute(
             "SELECT id, url FROM crawldb.page "
             "WHERE page_type_code = 'FRONTIER' "
             "ORDER BY id"
         )
         conn.commit()
-        return cursor.fetchall()
+        res = cur.fetchall()
+        return {"success": True,
+                "message": "Frontier pages fetched successfully!",
+                "data": res}
     except Exception as e:
-        print("Error while fetching frontier pages:", e)
-        return []
+        return {"success": False, "error": str(e)}
 
 
 def insert_site(domain, robots_content, sitemap_content):
@@ -151,9 +154,9 @@ def insert_image(conn, url, filename, content_type, accessed_time):
             cursor.close()
 
 
-def insert_page_into_frontier(conn, domain, url, page_type='FRONTIER',
-                              from_page=None):
+def insert_page_into_frontier(domain, url, html_content, http_status_code, accessed_time, page_type='FRONTIER', from_page=None):
     try:
+        conn = get_database_connection()
         cursor = conn.cursor()
 
         cursor.execute("SELECT id FROM crawldb.site"
@@ -161,36 +164,38 @@ def insert_page_into_frontier(conn, domain, url, page_type='FRONTIER',
         site_id = cursor.fetchone()
         if site_id is None:
             # Create a new site entry
-            # site_id = insert_site(conn, domain, None, None, None)
+            site_id = insert_site(domain, None, None)
             pass
-        # else:
-            # site_id = site_id[0]
+        else:
+            site_id = site_id[0]
 
         print('site_id', site_id)
-        cursor.execute(
-            "INSERT INTO crawldb.page (site_id, url, page_type_code) "
-            "VALUES (%s, %s, %s) RETURNING id",
-            (0, url, page_type)
+        id = cursor.execute(
+            "INSERT INTO crawldb.page (site_id, url, html_content, http_status_code, accessed_time, page_type_code) "
+            "VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
+            (site_id, url, html_content, http_status_code, accessed_time, page_type)
         )
-        to_page_id_result = cursor.fetchone()
+        # to_page_id_result = cursor.fetchone()
 
-        if from_page is not None and to_page_id_result is not None:
-            to_page_id = to_page_id_result[0]
-            cursor.execute("SELECT id FROM crawldb.page "
-                           "WHERE url = %s", (from_page,))
-            from_page_id_result = cursor.fetchone()
-            if from_page_id_result is not None:
-                from_page_id = from_page_id_result[0]
-                cursor.execute(
-                    "INSERT INTO crawldb.crawl_links (from_page, to_page) ",
-                    "VALUES (%s, %s)",
-                    (from_page_id, to_page_id)
-                )
+        # if from_page is not None and to_page_id_result is not None:
+        #     to_page_id = to_page_id_result[0]
+        #     cursor.execute("SELECT id FROM crawldb.page "
+        #                    "WHERE url = %s", (from_page,))
+        #     from_page_id_result = cursor.fetchone()
+        #     if from_page_id_result is not None:
+        #         from_page_id = from_page_id_result[0]
+        #         cursor.execute(
+        #             "INSERT INTO crawldb.crawl_links (from_page, to_page) ",
+        #             "VALUES (%s, %s)",
+        #             (from_page_id, to_page_id)
+        #         )
         conn.commit()
         print("Page inserted into frontier successfully.")
+        return {"success": True, "message": "Inserted page into frontier.", "data": id}
     except Exception as e:
         print("Error while inserting page into frontier:", e)
         conn.rollback()
+        return {"success": False, "error": str(e)}
     finally:
         if cursor is not None:
             cursor.close()
@@ -266,3 +271,17 @@ def get_site(domain):
         if cursor is not None:
             cursor.close()
 
+def get_hash_values():
+    try:
+        conn = get_database_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            # vrni use hash vrednosti od useh page-ov
+        )
+        return cursor.fetchall()
+    except Exception as e:
+        print("Error while fetching hash values:", e)
+        return []
+    finally:
+        if cursor is not None:
+            cursor.close()

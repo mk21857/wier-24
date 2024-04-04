@@ -86,14 +86,28 @@ def insert_site():
 @app.route("/insert_image", methods=['POST'])
 @basic_auth.login_required
 def insert_image():
-    retVal = dbo.insert_image()
+    data = request.get_json()
+    retVal = dbo.insert_image(data.get("image"))
     return jsonify(retVal)
 
+@app.route("/insert_page_data/<string:page_id>", methods=['POST'])
+@basic_auth.login_required
+def insert_page_data(page_id):
+    data = request.get_json()
+    retVal = dbo.insert_image(page_id, data.get("image"))
+    return jsonify(retVal)
 
 @app.route("/insert_page_into_frontier", methods=['POST'])
 @basic_auth.login_required
 def insert_page_into_frontier():
-    retVal = dbo.insert_page_into_frontier()
+    data = request.get_json()
+    retVal = dbo.insert_page_into_frontier(
+        data.get("domain"),
+        data.get("url"),
+        data.get("html_content"),
+        data.get("http_status_code"),
+        data.get("accessed_time")
+    )
     return jsonify(retVal)
 
 
@@ -104,10 +118,11 @@ def get_frontier_length():
     return jsonify("Frontier length:", length)
 
 
-@app.route("/update_page_data", methods=['POST'])
+@app.route("/update_page_data/<string:id>", methods=['POST'])
 @basic_auth.login_required
-def update_page_data():
-    retVal = dbo.update_page_data()
+def update_page_data(id):
+    data = request.get_json()
+    retVal = dbo.update_page_data(id, data) # Dodaj .get("karkoli_rabiš") za vsak parameter
     return jsonify(retVal)
 
 
@@ -124,6 +139,11 @@ def get_site():
     cursor = dbo.get_site()
     return jsonify(cursor)
 
+@app.route("/get_hash_values", methods=['GET'])
+@basic_auth.login_required
+def get_hash_values():
+    retVal = dbo.get_hash_values()
+    return jsonify(retVal)
 
 if __name__ == '__main__':
     app.run(ssl_context='adhoc')
