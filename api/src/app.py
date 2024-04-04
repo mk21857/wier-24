@@ -102,11 +102,14 @@ def insert_page_data(page_id):
 def insert_page_into_frontier():
     data = request.get_json()
     retVal = dbo.insert_page_into_frontier(
-        data.get("domain"),
-        data.get("url"),
-        data.get("html_content"),
-        data.get("http_status_code"),
-        data.get("accessed_time")
+        domain = data.get("domain"),
+        url = data.get("url"),
+        html_content = data.get("html_content"),
+        http_status_code = data.get("http_status_code"),
+        accessed_time = data.get("accessed_time"),
+        # from_page = data.get("from_page"),
+        # robots_content = data.get("robots_content"),
+        # sitemap_content = data.get("sitemap_content"),
     )
     return jsonify(retVal)
 

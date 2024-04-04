@@ -154,44 +154,52 @@ def insert_image(conn, url, filename, content_type, accessed_time):
             cursor.close()
 
 
-def insert_page_into_frontier(domain, url, html_content, http_status_code, accessed_time, page_type='FRONTIER', from_page=None):
+def insert_page_into_frontier(
+        domain,
+        url,
+        html_content,
+        http_status_code,
+        accessed_time,
+        page_type_code='FRONTIER',
+        from_page=None,
+        robots_content=None,
+        sitemap_content=None
+    ):
     try:
         conn = get_database_connection()
         cursor = conn.cursor()
 
         cursor.execute("SELECT id FROM crawldb.site"
                        " WHERE domain = %s", (domain,))
-        site_id = cursor.fetchone()
+        site_id = cursor.fetchone()[0]
         if site_id is None:
-            # Create a new site entry
-            site_id = insert_site(domain, None, None)
-            pass
+            site_id = insert_site(domain, robots_content, sitemap_content)
         else:
-            site_id = site_id[0]
+            site_id = site_id
 
-        print('site_id', site_id)
-        id = cursor.execute(
+        cursor.execute(
             "INSERT INTO crawldb.page (site_id, url, html_content, http_status_code, accessed_time, page_type_code) "
             "VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
-            (site_id, url, html_content, http_status_code, accessed_time, page_type)
+            (site_id, url, html_content, http_status_code, accessed_time, page_type_code)
         )
-        # to_page_id_result = cursor.fetchone()
+        page_id = cursor.fetchone()[0]
 
-        # if from_page is not None and to_page_id_result is not None:
-        #     to_page_id = to_page_id_result[0]
-        #     cursor.execute("SELECT id FROM crawldb.page "
-        #                    "WHERE url = %s", (from_page,))
-        #     from_page_id_result = cursor.fetchone()
-        #     if from_page_id_result is not None:
-        #         from_page_id = from_page_id_result[0]
-        #         cursor.execute(
-        #             "INSERT INTO crawldb.crawl_links (from_page, to_page) ",
-        #             "VALUES (%s, %s)",
-        #             (from_page_id, to_page_id)
-        #         )
+        if from_page is not None and page_id is not None:
+            to_page_id = page_id
+            cursor.execute("SELECT id FROM crawldb.page "
+                           "WHERE url = %s", (from_page,))
+            from_page_id_result = cursor.fetchone()[0]
+            if from_page_id_result is not None:
+                from_page_id = from_page_id_result
+                cursor.execute(
+                    "INSERT INTO crawldb.crawl_links (from_page, to_page) ",
+                    "VALUES (%s, %s)",
+                    (from_page_id, to_page_id)
+                )
         conn.commit()
         print("Page inserted into frontier successfully.")
-        return {"success": True, "message": "Inserted page into frontier.", "data": id}
+
+        return {"success": True, "message": "Inserted page into frontier.", "data": page_id}
     except Exception as e:
         print("Error while inserting page into frontier:", e)
         conn.rollback()
