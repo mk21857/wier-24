@@ -159,7 +159,8 @@ def insert_page_into_frontier(
         domain,
         url,
         robots_content=None,
-        sitemap_content=None):
+        sitemap_content=None,
+        from_page=None):
     try:
         page_type_code = 'FRONTIER'
         conn = get_database_connection()
@@ -180,18 +181,12 @@ def insert_page_into_frontier(
         )
         page_id = cursor.fetchone()[0]
 
-        # if from_page is not None and page_id is not None:
-        #    to_page_id = page_id
-        #    cursor.execute("SELECT id FROM crawldb.page "
-        #                   "WHERE url = %s", (from_page,))
-        #    from_page_id_result = cursor.fetchone()[0]
-        #    if from_page_id_result is not None:
-        #        from_page_id = from_page_id_result
-        #        cursor.execute(
-        #            "INSERT INTO crawldb.crawl_links (from_page, to_page) ",
-        #            "VALUES (%s, %s)",
-        #            (from_page_id, to_page_id)
-        #        )
+        cursor.execute(
+            "INSERT INTO crawldb.link (from_page, to_page) "
+            "VALUES (%s, %s)",
+            (from_page, page_id)
+        )
+
         conn.commit()
         print("Page inserted into frontier successfully.")
 
@@ -258,6 +253,18 @@ def update_page_data(url, page_type_code, html_content, http_status_code,
                 (url, data_type_code, data)
             )
         elif (page_type_code == 'DUPLICATE'):
+            to_id = cursor.execute(
+                "SELECT id FROM crawldb.page WHERE url = %s AND page_type_code = 'FRONTIER'", (url,)
+            )
+            original_id = cursor.execute(
+                "SELECT id FROM crawldb.page WHERE url = %s AND NOT page_type_code = %s", (url, 'DUPLICATE',)
+            )
+            cursor.execute(
+                "UPDATE crawldb.link "
+                "SET to_page = %s, "
+                "WHERE to_id = %s",
+                (original_id, to_id)
+            )
             cursor.execute(
                 "UPDATE crawldb.page "
                 "SET page_type_code = %s, "
