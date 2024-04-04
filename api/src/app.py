@@ -55,10 +55,10 @@ def execute_script(script_name):
 @app.route("/drop_db", methods=['POST'])
 @basic_auth.login_required
 def drop_db():
-    # retVal = dbo.drop_database()
-    # return jsonify(retVal)
-    return jsonify({"success": False, "error": "This operation is disabled!"
-                    " Enable it by commenting out the code."})
+    retVal = dbo.drop_database()
+    return jsonify(retVal)
+    # return jsonify({"success": False, "error": "This operation is disabled!"
+    #                 " Enable it by commenting out the code."})
 
 
 @app.route("/get_tables", methods=['GET'])
@@ -104,9 +104,9 @@ def insert_page_into_frontier():
     retVal = dbo.insert_page_into_frontier(
         domain = data.get("domain"),
         url = data.get("url"),
-        html_content = data.get("html_content"),
-        http_status_code = data.get("http_status_code"),
-        accessed_time = data.get("accessed_time"),
+        # html_content = data.get("html_content"),
+        # http_status_code = data.get("http_status_code"),
+        # accessed_time = data.get("accessed_time"),
         # from_page = data.get("from_page"),
         # robots_content = data.get("robots_content"),
         # sitemap_content = data.get("sitemap_content"),
@@ -125,15 +125,26 @@ def get_frontier_length():
 @basic_auth.login_required
 def update_page_data():
     data = request.get_json()
-    retVal = dbo.update_page_data(data) # Dodaj .get("karkoli_rabiš") za vsak parameter
+    retVal = dbo.update_page_data(
+        # domain = data.get("domain"),
+        url = data.get("url"),
+        html_content = data.get("html_content"),
+        http_status_code = data.get("http_status_code"),
+        accessed_time = data.get("accessed_time"),
+        page_type_code = data.get("page_type_code"),
+        # from_page = data.get("from_page"),
+        # robots_content = data.get("robots_content"),
+        # sitemap_content = data.get("sitemap_content"),
+    ) # Dodaj .get("karkoli_rabiš") za vsak parameter
     return jsonify(retVal)
 
 
 @app.route("/get_page", methods=['GET'])
 @basic_auth.login_required
 def get_page():
-    cursor = dbo.get_page()
-    return jsonify(cursor)
+    data = request.get_json()
+    retVal = dbo.get_page(data.get("url"))
+    return jsonify(retVal)
 
 
 @app.route("/get_site", methods=['GET'])
@@ -142,10 +153,10 @@ def get_site():
     cursor = dbo.get_site()
     return jsonify(cursor)
 
-@app.route("/get_hash_values", methods=['GET'])
+@app.route("/get_hashed_content", methods=['GET'])
 @basic_auth.login_required
-def get_hash_values():
-    retVal = dbo.get_hash_values()
+def get_hashed_content():
+    retVal = dbo.get_hashed_content()
     return jsonify(retVal)
 
 if __name__ == '__main__':

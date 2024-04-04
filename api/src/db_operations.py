@@ -39,7 +39,7 @@ def test_db_connection():
 
 def execute_sql_script(script_file_path):
     try:
-        script_path = f'/app/init-scripts/{script_file_path}'
+        script_path = f'/app/sql_scripts/{script_file_path}'
         if os.path.exists(script_path):
             with open(script_path, 'r') as script_file:
                 conn = get_database_connection()
@@ -167,11 +167,11 @@ def insert_page_into_frontier(
 
         cursor.execute("SELECT id FROM crawldb.site"
                        " WHERE domain = %s", (domain,))
-        site_id = cursor.fetchone()[0]
+        site_id = cursor.fetchone()
         if site_id is None:
             site_id = insert_site(domain, robots_content, sitemap_content)
         else:
-            site_id = site_id
+            site_id = site_id[0]
 
         cursor.execute(
             "INSERT INTO crawldb.page (site_id, url, page_type_code) "
@@ -226,7 +226,7 @@ def get_frontier_length():
 
 
 def update_page_data(url, page_type_code, html_content, http_status_code,
-                     accessed_time, data_type_code, data):
+                     accessed_time, data_type_code=None, data=None):
     try:
         conn = get_database_connection()
         cursor = conn.cursor()
@@ -267,10 +267,10 @@ def update_page_data(url, page_type_code, html_content, http_status_code,
                 (page_type_code, http_status_code, accessed_time, url)
             )
         conn.commit()
-        print("Page data updated successfully.")
+        return {"success": True, "message": "Page data updated successfully!"}
     except Exception as e:
-        print("Error while updating page data:", e)
         conn.rollback()
+        return {"success": False, "error": str(e)}
     finally:
         if cursor is not None:
             cursor.close()
@@ -281,14 +281,14 @@ def get_page(url):
         conn = get_database_connection()
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT id, site_id, url, page_type_code ",
+            "SELECT id, site_id, url, page_type_code, html_content "
             "FROM crawldb.page WHERE url = %s",
             (url,)
         )
-        return cursor.fetchone()
+        retVal = cursor.fetchone()
+        return {"success": True, "message": "Page fetched successfully!", "data": retVal}
     except Exception as e:
-        print("Error while fetching page data:", e)
-        return None
+        return {"success": False, "error": str(e)}
     finally:
         if cursor is not None:
             cursor.close()
@@ -299,7 +299,7 @@ def get_site(domain):
         conn = get_database_connection()
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT id, domain, robots_content, sitemap_content, ip_address ",
+            "SELECT id, domain, robots_content, sitemap_content ",
             "FROM crawldb.site WHERE domain = %s",
             (domain,)
         )
@@ -312,12 +312,12 @@ def get_site(domain):
             cursor.close()
 
 
-def get_hash_values():
+def get_hashed_content():
     try:
         conn = get_database_connection()
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT hash_value FROM crawldb.page"
+            "SELECT hashed_content FROM crawldb.page"
         )
         retVal = cursor.fetchall()
         return {"success": True, "message": "Hash values fetched successfully!", "data": retVal}
