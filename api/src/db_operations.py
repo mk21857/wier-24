@@ -131,8 +131,9 @@ def insert_site(domain, robots_content, sitemap_content):
             cursor.close()
 
 
-def insert_image(conn, url, filename, content_type, accessed_time):
+def insert_image(url, filename, content_type, accessed_time):
     try:
+        conn = get_database_connection()
         cursor = conn.cursor()
         cursor.execute(
             "SELECT id FROM crawldb.page WHERE url = %s", (url,)
@@ -205,8 +206,9 @@ def insert_page_into_frontier(
             cursor.close()
 
 
-def get_frontier_length(conn):
+def get_frontier_length():
     try:
+        conn = get_database_connection()
         cursor = conn.cursor()
         cursor.execute(
             "SELECT COUNT(*) FROM crawldb.page ",
@@ -274,8 +276,9 @@ def update_page_data(url, page_type_code, html_content, http_status_code,
             cursor.close()
 
 
-def get_page(conn, url):
+def get_page(url):
     try:
+        conn = get_database_connection()
         cursor = conn.cursor()
         cursor.execute(
             "SELECT id, site_id, url, page_type_code ",
