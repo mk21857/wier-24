@@ -105,8 +105,9 @@ def get_frontier_pages(conn):
         return []
 
 
-def insert_site(conn, domain, robots_content, sitemap_content):
+def insert_site(domain, robots_content, sitemap_content):
     try:
+        conn = get_database_connection()
         cursor = conn.cursor()
         cursor.execute(
             "INSERT INTO crawldb.site "
@@ -248,8 +249,9 @@ def get_page(conn, url):
             cursor.close()
 
 
-def get_site(conn, domain):
+def get_site(domain):
     try:
+        conn = get_database_connection()
         cursor = conn.cursor()
         cursor.execute(
             "SELECT id, domain, robots_content, sitemap_content, ip_address ",

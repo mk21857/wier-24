@@ -1,6 +1,6 @@
 import db_operations as dbo
 # import bcrypt
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
@@ -78,8 +78,9 @@ def get_frontier_pages():
 @app.route("/insert_site", methods=['POST'])
 @basic_auth.login_required
 def insert_site():
-    site_id = dbo.insert_site()
-    return jsonify("Site ID:", site_id)
+    data = request.get_json()
+    site_id = dbo.insert_site(data.get("domain"), data.get("robots_content"), data.get("sitemap_content"))
+    return jsonify("data", site_id)
 
 
 @app.route("/insert_image", methods=['POST'])
