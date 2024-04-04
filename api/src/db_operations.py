@@ -157,15 +157,10 @@ def insert_image(conn, url, filename, content_type, accessed_time):
 def insert_page_into_frontier(
         domain,
         url,
-        html_content,
-        http_status_code,
-        accessed_time,
-        page_type_code='FRONTIER',
-        from_page=None,
         robots_content=None,
-        sitemap_content=None
-    ):
+        sitemap_content=None):
     try:
+        page_type_code = 'FRONTIER'
         conn = get_database_connection()
         cursor = conn.cursor()
 
@@ -178,28 +173,29 @@ def insert_page_into_frontier(
             site_id = site_id
 
         cursor.execute(
-            "INSERT INTO crawldb.page (site_id, url, html_content, http_status_code, accessed_time, page_type_code) "
-            "VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
-            (site_id, url, html_content, http_status_code, accessed_time, page_type_code)
+            "INSERT INTO crawldb.page (site_id, url, page_type_code) "
+            "VALUES (%s, %s, %s) RETURNING id",
+            (site_id, url, page_type_code)
         )
         page_id = cursor.fetchone()[0]
 
-        if from_page is not None and page_id is not None:
-            to_page_id = page_id
-            cursor.execute("SELECT id FROM crawldb.page "
-                           "WHERE url = %s", (from_page,))
-            from_page_id_result = cursor.fetchone()[0]
-            if from_page_id_result is not None:
-                from_page_id = from_page_id_result
-                cursor.execute(
-                    "INSERT INTO crawldb.crawl_links (from_page, to_page) ",
-                    "VALUES (%s, %s)",
-                    (from_page_id, to_page_id)
-                )
+        # if from_page is not None and page_id is not None:
+        #    to_page_id = page_id
+        #    cursor.execute("SELECT id FROM crawldb.page "
+        #                   "WHERE url = %s", (from_page,))
+        #    from_page_id_result = cursor.fetchone()[0]
+        #    if from_page_id_result is not None:
+        #        from_page_id = from_page_id_result
+        #        cursor.execute(
+        #            "INSERT INTO crawldb.crawl_links (from_page, to_page) ",
+        #            "VALUES (%s, %s)",
+        #            (from_page_id, to_page_id)
+        #        )
         conn.commit()
         print("Page inserted into frontier successfully.")
 
-        return {"success": True, "message": "Inserted page into frontier.", "data": page_id}
+        return {"success": True, "message": "Inserted page into frontier.",
+                "data": page_id}
     except Exception as e:
         print("Error while inserting page into frontier:", e)
         conn.rollback()
@@ -227,14 +223,47 @@ def get_frontier_length(conn):
             cursor.close()
 
 
-def update_page_data(conn, url, page_type):
+def update_page_data(url, page_type_code, html_content, http_status_code,
+                     accessed_time, data_type_code, data):
     try:
+        conn = get_database_connection()
         cursor = conn.cursor()
-        cursor.execute(
-            "UPDATE crawldb.page SET page_type_code = %s ",
-            "WHERE url = %s",
-            (page_type, url)
-        )
+        if (page_type_code == 'HTML'):
+            cursor.execute(
+                "UPDATE crawldb.page "
+                "SET page_type_code = %s, html_content = %s, "
+                "http_status_code = %s, "
+                "accessed_time = %s"
+                "WHERE url = %s",
+                (page_type_code, html_content, http_status_code, accessed_time,
+                 url)
+            )
+        elif (page_type_code == 'BINARY'):
+            cursor.execute(
+                "UPDATE crawldb.page "
+                "SET page_type_code = %s,"
+                "http_status_code = %s, "
+                "accessed_time = %s"
+                "WHERE url = %s",
+                (page_type_code, http_status_code, accessed_time,
+                 url)
+            )
+            cursor.execute(
+                "INSERT INTO crawldb.page_data "
+                "(page_id, data_type_code, data) "
+                "VALUES ((SELECT id FROM crawldb.page WHERE url = %s),"
+                " %s, %s)",
+                (url, data_type_code, data)
+            )
+        elif (page_type_code == 'DUPLICATE'):
+            cursor.execute(
+                "UPDATE crawldb.page "
+                "SET page_type_code = %s, "
+                "http_status_code = %s, "
+                "accessed_time = %s"
+                "WHERE url = %s",
+                (page_type_code, http_status_code, accessed_time, url)
+            )
         conn.commit()
         print("Page data updated successfully.")
     except Exception as e:
@@ -278,6 +307,7 @@ def get_site(domain):
     finally:
         if cursor is not None:
             cursor.close()
+
 
 def get_hash_values():
     try:
