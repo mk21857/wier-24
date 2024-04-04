@@ -317,12 +317,12 @@ def get_hash_values():
         conn = get_database_connection()
         cursor = conn.cursor()
         cursor.execute(
-            # vrni use hash vrednosti od useh page-ov
+            "SELECT hash_value FROM crawldb.page"
         )
-        return cursor.fetchall()
+        retVal = cursor.fetchall()
+        return {"success": True, "message": "Hash values fetched successfully!", "data": retVal}
     except Exception as e:
-        print("Error while fetching hash values:", e)
-        return []
+        return {"success": False, "error": str(e)}
     finally:
         if cursor is not None:
             cursor.close()

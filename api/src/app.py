@@ -71,8 +71,8 @@ def get_tables():
 @app.route("/get_frontier_pages", methods=['GET'])
 @basic_auth.login_required
 def get_frontier_pages():
-    cursor = dbo.get_frontier_pages()
-    return jsonify(cursor)
+    retVal = dbo.get_frontier_pages()
+    return jsonify(retVal)
 
 
 @app.route("/insert_site", methods=['POST'])
@@ -121,11 +121,11 @@ def get_frontier_length():
     return jsonify("Frontier length:", length)
 
 
-@app.route("/update_page_data/<string:id>", methods=['POST'])
+@app.route("/update_page_data", methods=['POST'])
 @basic_auth.login_required
-def update_page_data(id):
+def update_page_data():
     data = request.get_json()
-    retVal = dbo.update_page_data(id, data) # Dodaj .get("karkoli_rabiš") za vsak parameter
+    retVal = dbo.update_page_data(data) # Dodaj .get("karkoli_rabiš") za vsak parameter
     return jsonify(retVal)
 
 
