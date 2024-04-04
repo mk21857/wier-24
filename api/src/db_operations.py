@@ -181,11 +181,19 @@ def insert_page_into_frontier(
         )
         page_id = cursor.fetchone()[0]
 
-        cursor.execute(
-            "INSERT INTO crawldb.link (from_page, to_page) "
-            "VALUES (%s, %s)",
-            (from_page, page_id)
-        )
+        # Add LINKS
+        if from_page is not None:
+            cursor.execute(
+                "INSERT INTO crawldb.link (from_page, to_page) "
+                "VALUES (%s, %s)",
+                (from_page, page_id)
+            )
+        else:
+            cursor.execute(
+                "INSERT INTO crawldb.link (from_page, to_page) "
+                "VALUES (%s, %s)",
+                (page_id, page_id)
+            )
 
         conn.commit()
         print("Page inserted into frontier successfully.")
