@@ -105,8 +105,10 @@ def insert_page_into_frontier(conn, domain, url, page_type='FRONTIER',
                        " WHERE domain = %s", (domain,))
         site_id = cursor.fetchone()
         if site_id is None:
-            print("No domain stored with this url:", url)
-            return
+            # Create a new site entry
+            site_id = insert_site(conn, domain, None, None, None)
+        else:
+            site_id = site_id[0]
 
         cursor.execute(
             "INSERT INTO crawldb.page (site_id, url, page_type_code) "
@@ -170,6 +172,40 @@ def update_page_data(conn, url, page_type):
     except Exception as e:
         print("Error while updating page data:", e)
         conn.rollback()
+    finally:
+        if cursor is not None:
+            cursor.close()
+
+
+def get_page(conn, url):
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT id, site_id, url, page_type_code ",
+            "FROM crawldb.page WHERE url = %s",
+            (url,)
+        )
+        return cursor.fetchone()
+    except Exception as e:
+        print("Error while fetching page data:", e)
+        return None
+    finally:
+        if cursor is not None:
+            cursor.close()
+
+
+def get_site(conn, domain):
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT id, domain, robots_content, sitemap_content, ip ",
+            "FROM crawldb.site WHERE domain = %s",
+            (domain,)
+        )
+        return cursor.fetchone()
+    except Exception as e:
+        print("Error while fetching site data:", e)
+        return None
     finally:
         if cursor is not None:
             cursor.close()

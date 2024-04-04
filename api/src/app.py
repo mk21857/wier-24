@@ -55,5 +55,11 @@ def get_tables():
     tables = dbo.get_all_tables()
     return jsonify(tables)
 
+@app.route("/get_frontier_pages", methods=['GET'])
+@basic_auth.login_required
+def get_frontier_pages():
+    tables = dbo.get_frontier_pages()
+    return jsonify(tables)
+
 if __name__ == '__main__':
     app.run(ssl_context='adhoc')

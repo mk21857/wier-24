@@ -72,3 +72,18 @@ def get_all_tables():
         return {"success": True, "message": f"Successfully retrieved all tables from '{os.environ.get('CLOUD_SQL_DATABASE')}'.", "data": all_tables}
     except Exception as e:
         return {"success": False, "error": str(e)}
+    
+    
+def get_frontier_pages(conn):
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT id, url FROM crawldb.page "
+            "WHERE page_type_code = 'FRONTIER' "
+            "ORDER BY id"
+        )
+        conn.commit()
+        return cursor.fetchall()
+    except Exception as e:
+        print("Error while fetching frontier pages:", e)
+        return []
