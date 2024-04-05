@@ -31,3 +31,6 @@ def update_page_data(data):
 
 def get_hashed_content():
     return requests.get(ENDPOINT + "/get_hashed_content", verify = False, auth = AUTH).json()['data']
+
+def insert_image(data):
+    return requests.post(ENDPOINT + "/insert_image", json=data, verify = False, auth = AUTH).json()
