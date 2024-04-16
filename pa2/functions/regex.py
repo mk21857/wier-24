@@ -1,28 +1,29 @@
 import re
-import json
 
 
 def rtv(html):
     title_regex = re.compile(r'<h1>(.*?)</h1>')
 
-    subtitle_regex = re.compile(r'<h2 class="subtitle">(.*?)</h2>')
+    subtitle_regex = re.compile(r'<div class="subtitle">(.*?)</div>')
 
     lead_regex = re.compile(r'<p class="lead">(.*?)</p>')
 
-    content_regex = re.compile(r'<div class="article-body">(.*?)</div>')
+    content_regex = re.compile(
+        r'<div *?class="article-body">(.*?)<div class="gallery">',
+        re.DOTALL)
+    # to je ful grd način ma neznam drugače
 
-    author_regex = re.compile(r'<p class="author-name">(.*?)</p>')
+    author_regex = re.compile(r'<div class="author-name">(.*?)</div>')
 
-    # published_time_regex = re.compile(r'<time datetime="(.*?)">')
-    # Nevem kako točno dobit published time
+    published_time_regex = re.compile(r'<div class="publish-meta">\n\t\t(.*?)<br>')
 
     data = {
-        'Title': re.search(title_regex, html),
-        'Subtitle': re.search(subtitle_regex, html),
-        'Lead': re.search(lead_regex, html),
-        'Content': re.search(content_regex, html),
-        'Author': re.search(author_regex, html),
-        # 'PublishedTime': re.search(published_time_regex, html)
+        'Title': re.findall(title_regex, html)[0],
+        'Subtitle': re.findall(subtitle_regex, html)[0],
+        'Lead': re.findall(lead_regex, html)[0],
+        'Content': re.findall(content_regex, html)[0],
+        'Author': re.findall(author_regex, html)[0],
+        'PublishedTime': re.findall(published_time_regex, html)[0]
     }
 
-    return json.dumps(data, ensure_ascii=False)
+    return data
