@@ -87,7 +87,8 @@ def insert_site():
 @basic_auth.login_required
 def insert_image():
     data = request.get_json()
-    retVal = dbo.insert_image(data.get("image"))
+    retVal = dbo.insert_image(data.get("url"), data.get("filename"), 
+                              data.get("content_type"), data.get("accessed_time"))
     return jsonify(retVal)
 
 @app.route("/insert_page_data/<string:page_id>", methods=['POST'])
@@ -107,7 +108,7 @@ def insert_page_into_frontier():
         # html_content = data.get("html_content"),
         # http_status_code = data.get("http_status_code"),
         # accessed_time = data.get("accessed_time"),
-        # from_page = data.get("from_page"),
+        from_page = data.get("from_page"),
         # robots_content = data.get("robots_content"),
         # sitemap_content = data.get("sitemap_content"),
     )
@@ -126,15 +127,16 @@ def get_frontier_length():
 def update_page_data():
     data = request.get_json()
     retVal = dbo.update_page_data(
-        # domain = data.get("domain"),
-        url = data.get("url"),
-        html_content = data.get("html_content"),
-        http_status_code = data.get("http_status_code"),
-        accessed_time = data.get("accessed_time"),
-        page_type_code = data.get("page_type_code"),
-        # from_page = data.get("from_page"),
-        # robots_content = data.get("robots_content"),
-        # sitemap_content = data.get("sitemap_content"),
+                                url = data.get("url"),
+                                html_content = data.get("html_content"),
+                                http_status_code = data.get("http_status_code"),
+                                accessed_time = data.get("accessed_time"),
+                                page_type_code = data.get("page_type_code"),
+                                #from_page = data.get("from_page"),
+                                robots_content = data.get("robots_content"),
+                                sitemap_content = data.get("sitemap_content"),
+                                data_type_code=data.get("data_type_code"),
+                                hashed_content=data.get("hashed_content"),
     ) # Dodaj .get("karkoli_rabiš") za vsak parameter
     return jsonify(retVal)
 
@@ -158,6 +160,7 @@ def get_site():
 def get_hashed_content():
     retVal = dbo.get_hashed_content()
     return jsonify(retVal)
+
 
 if __name__ == '__main__':
     app.run(ssl_context='adhoc')
