@@ -1,6 +1,31 @@
 import re
 
 
+def overstock(html):
+    title_regex = re.compile(r'</table></td><td valign="top"> \n<a href=[^>]*><b>(.*?)<\/b><\/a>')
+
+    list_price_regex = re.compile(r'<s>(.*?)</s>')
+
+    price_regex = re.compile(r'<span class="bigred"><b>(.*?)</b>')
+
+    saving_regex = re.compile(r'<span class="littleorange">(\$[\d,]+\.\d{2}) \(\d{1,3}%\)<\/span>')
+
+    saving_percent_regex = re.compile(r'<span class="littleorange">(?:.*?\$[\d,]+\.\d{2} )\((\d{1,3}%)\)<\/span>')
+
+    content_regex = re.compile(r'<span class="normal">([^<]*)<br>')
+
+    data = {
+        'Title': re.findall(title_regex, html)[0],
+        'ListPrice': re.findall(list_price_regex, html)[0],
+        'Price': re.findall(price_regex, html)[0],
+        'Saving': re.findall(saving_regex, html)[0],
+        'SavingPercent': re.findall(saving_percent_regex, html)[0],
+        'Content': re.findall(content_regex, html)[0],
+    }
+
+    return data
+
+
 def rtv(html):
     title_regex = re.compile(r'<h1>(.*?)</h1>')
 
