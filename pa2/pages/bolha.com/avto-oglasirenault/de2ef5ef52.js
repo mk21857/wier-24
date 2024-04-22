@@ -1,0 +1,1 @@
+import{P as t}from"./825e28468d.js";function a(t,a=!1){return a?` data-qa="${t}" `:""}function n(a,n){t()&&a?.setAttribute("data-qa",n)}const o={install(n){n.config.globalProperties.qaAttribute=function(n){return a(n,t())}}};function s(a){a.config.globalProperties.$isQaTestingEnabled??=t()}const i=n=>a(n,t());export{o as Q,s as a,i as q,n as s};

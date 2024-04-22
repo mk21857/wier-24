@@ -52,3 +52,28 @@ def rtv(html):
     }
 
     return data
+
+
+def sport_tv(html):
+    title_regex = re.compile(r'<h1 class="title">(.*?)</h1>')
+
+    lead_regex = re.compile(r'<h2 class="main-caption mb-30">\n(.*?)</h2>')
+
+    author_regex = re.compile(r'<p class="avtor"><strong>Avtor: (.*?)</strong>')
+
+    published_date_regex = re.compile(r'<div class="post-date pull-left">\s*<span>(.*?)<\/span>')
+
+    content_regex = re.compile(
+        r'<div class="clearfix"></div>\s*<div.*?>(.*?)<style>',
+        re.DOTALL)
+
+    data = {
+        'Title': re.findall(title_regex, html)[0],
+        # 'Subtitle': re.findall(subtitle_regex, html)[0],
+        'Lead': re.findall(lead_regex, html)[0],
+        'Content': re.findall(content_regex, html)[0],
+        'Author': re.findall(author_regex, html)[0],
+        'PublishedDate': re.findall(published_date_regex, html)[0]
+    }
+
+    return data

@@ -1,0 +1,883 @@
+
+
+<!doctype html>
+<html lang="sl" class="Page--authLogin Page Page--flat no-js" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no" />
+                        <title>Oglasnik bolha.com - prijava</title>
+                                <link rel="shortcut icon" href="https://static.bolha.com/dist/9d8b0052fe.ico" />
+                                <link rel="apple-touch-icon-precomposed" href="https://static.bolha.com/dist/2347e44444.png" />
+                                <meta name="description" content="" />
+                                <meta name="keywords" content="" />
+                                <meta property="fb:admins" content="644520616,1652267423" />
+                                <meta property="fb:page_id" content="126861945114" />
+                                <meta property="fb:app_id" content="538227887019820" />
+                                <meta property="fb:site_name" content="bolha.com" />
+                                <meta property="referrer" content="origin-when-cross-origin" />
+                                <link rel="alternate" media="only screen and (max-width: 640px)" href="" />
+                                <link rel="preconnect" href="https://static.bolha.com" crossorigin="" />
+                                <link rel="dns-prefetch" href="https://static.bolha.com" />
+                    <link rel="canonical" href="https://www.bolha.com/prijava/" />
+
+    <script>
+
+        
+        var app = app || {"boot":[],"domReady":[],"translations":{"user_identity.facebook_connect.register_caption":"Nadaljuj s Facebook ra\u010dunom","user_identity.facebook_connect.connection_failed_caption":"Prijava s Facebook ra\u010dunom ni mogo\u010da. Poskusite ponovno ali pa se prijavite\/registrirajte z bolha.com ra\u010dunom.","user_identity.facebook_connect.connect_action_caption":"Pove\u017ei s facebook ra\u010dunom","user_identity.facebook_connect.disconnect_action_caption":"Prekini povezavo","user_identity.facebook_connect.connected_description_text":"Facebook ra\u010dun je povezan.","user_identity.facebook_connect.default_error_message":"Povezava z Facebook ra\u010dunom ni uspela","user_identity.facebook_connect.disconnect_additional_info_text":"Povezava z va\u0161im Facebook ra\u010dunom je prekinjena. \u010ce nimate gesla, ga lahko ustvarite s klikom na povezavo \"Pozabljeno geslo ali uporabni\u0161ko ime\" na strani za prijavo.","user_identity.facebook_connect.successful_sign_in_homepage_notification":"Va\u0161i uporabni\u0161ki ra\u010duni so povezani. Zdaj se lahko na bolha.com prijavite s klikom na Facebook gumb.","user_identity.facebook_connect.confirmation_action_caption":"Potrdi s Facebook ra\u010dunom","user_identity.apple_connect.register_caption":"Nadaljuj z Apple ra\u010dunom","user_identity.apple_connect.connection_failed_caption":"Prijava z Apple ra\u010dunom ni mogo\u010da. Poskusite ponovno ali pa se prijavite\/registrirajte z bolha.com ra\u010dunom.","user_identity.apple_connect.connect_action_caption":"Pove\u017ei z Apple ra\u010dunom","user_identity.apple_connect.disconnect_action_caption":"Prekini povezavo","user_identity.apple_connect.connected_description_text":"Apple ra\u010dun je povezan.","user_identity.apple_connect.disconnect_additional_info_text":"Povezava z va\u0161im Apple ra\u010dunom je prekinjena. \u010ce nimate gesla, ga lahko ustvarite s klikom na povezavo \"Pozabljeno geslo ali uporabni\u0161ko ime\" na strani za prijavo.","user_identity.apple_connect.default_error_message":"Povezava z Apple ra\u010dunom ni uspela.","user_identity.apple_connect.successful_sign_in_homepage_notification":"Va\u0161i uporabni\u0161ki ra\u010duni so povezani. Zdaj se lahko na bolha.com prijavite s klikom na Apple gumb.","user_identity.apple_connect.confirmation_action_caption":"Potrdi z Apple ra\u010dunom","user_identity.google_connect.register_caption":"Nadaljuj z Google ra\u010dunom","user_identity.google_connect.connection_failed_caption":"Prijava z Google ra\u010dunom ni mogo\u010da. Poskusite ponovno ali pa se prijavite\/registrirajte z bolha.com ra\u010dunom.","user_identity.google_connect.connect_action_caption":"Pove\u017ei z Google ra\u010dunom","user_identity.google_connect.disconnect_action_caption":"Prekini povezavo","user_identity.google_connect.connected_description_text":"Google ra\u010dun je povezan.","user_identity.google_connect.disconnect_additional_info_text":"Povezava z va\u0161im Google ra\u010dunom je prekinjena. \u010ce nimate gesla, ga lahko ustvarite s klikom na povezavo \"Pozabljeno geslo ali uporabni\u0161ko ime\" na strani za prijavo.","user_identity.google_connect.default_error_message":"Povezava z Google ra\u010dunom ni uspela.","user_identity.google_connect.successful_sign_in_homepage_notification":"Va\u0161i uporabni\u0161ki ra\u010duni so povezani. Zdaj se lahko na bolha.com prijavite s klikom na Google gumb.","user_identity.google_connect.confirmation_action_caption":"Potrdi z Google ra\u010dunom","user_identity.third_party_connect.user_login.account_inactive":"Uporabni\u0161ki ra\u010dun ni aktiven. Za dodatna vpra\u0161anja kontaktirajte Podporo uporabnikom.","user_identity.third_party_connect.third_party_notification.account_active_connect":"Najden je bil uporabni\u0161ki ra\u010dun z va\u0161im e-naslovom. Prijavite se na bolha.com in ju pove\u017eite.","user_identity.third_party_connect.third_party_notification.admin_user_matched_error_message":"Registracija s tem e-po\u0161tnim naslovom ni mogo\u010da. Za vsa dodatna vpra\u0161anja se obrnite na oddelek za pomo\u010d uporabnikom.","user_identity.third_party_connect.third_party_notification.no_account_found":"Va\u0161ega ra\u010duna na bolha.com nismo na\u0161li, registrirajte se.","user_identity.third_party_account.registration.form.forgotten_password":"Pozabljeno geslo ali uporabni\u0161ko ime?","user_identity.user_delete_confirmation.pay_protect.error_detail":"Va\u0161ega uporabni\u0161kega ra\u010duna trenutno ni mogo\u010de izbrisati, ker imate v storitvi BREZ SKRBI aktivne ponudbe.","common.banners.pushdown.show_caption":"Prika\u017ei","common.banners.pushdown.hide_caption":"Skrij","common.banners.toggler.show_caption":"Prika\u017ei","common.banners.toggler.hide_caption":"Skrij","common.cookie_policy.agree_button_caption":"Strinjam se","common.map.ad_code":"\u0160tevilka oglasa","common.map.no_ad_caption":"Ni oglas","common.carousel.prev_caption":"Nazaj","common.carousel.next_caption":"Naprej","common.ads.add_to_favorites_success":"Oglas je uspe\u0161no shranjen.","common.ads.add_to_favorites_fail":"Shranjevanje oglasa ni uspelo.","common.modal.cancel_caption":"Prekli\u010di","common.modal.confirm_caption":"Potrdi","common.modal.close_caption":"Zapri","common.modal.zoom_in_caption":"Pribli\u017eajte pogled","common.modal.zoom_out_caption":"Pomanj\u0161ajte pogled","common.privacy_policy_notice.close_caption":"Zapri","common.privacy_policy_notice.confirm_caption":"Razumem","common.ad_compare.max_items_reached":"Primerjava lahko vsebuje najve\u010d %maxItems% oglasov. Odstranite 1 oglas","common.domestic_currency":"evro","common.notification.close_caption":"Zapri","common.system_feedback.loading":"Nalaganje\u2026","common.system_feedback.loading_error":"Pri\u0161lo je do nepri\u010dakovane napake.","common.smart_app_banner.link":"Odpri","common.deeplink.popup_title":"TODO-Otvori Bolhu u","common.deeplink.popup_application_caption":"TODO-Bolha aplikaciji","common.deeplink.popup_browser_caption":"TODO-Pregledniku","common.user_account.offline_notice":"Trenutno nimate vzpostavljene internetne povezave. Nekatere funkcije niso na voljo.","ad_browse.search.mainbox.placeholder":"Kaj i\u0161\u010dete danes?","ad_browse.search.mainbox.search":"I\u0161\u010di","ad_browse.search.mainbox.clear_input":"Odstrani vnos","ad_browse.search.mainbox.at_least_2_characters":"Vnesite izraz z vsaj 2 znakoma.","ad_browse.search.mainbox.back_action":"Povratak","common.search_suggestion.all_label":"Vse","common.search_suggestion.category_label":"Kategorije","common.search_suggestion.term_label":"Iskalni nizi"},"localizedRoutes":[],"settings":{"userId":-1,"userType":1,"isBackendUser":false,"ccapi":{"baseUrl":"https:\/\/www.bolha.com","authType":"public","clientId":"njuskalo_js_app","clientSecret":"1412aa6f3a6194adefceb8e547d5e6aa"},"features":{"isOCMFeatureEnabled":true,"isAmazonPublisherServicesFeatureEnabled":false,"isDidomiFeatureEnabled":true,"isDidomiFullImplementationFeatureEnabled":true,"isFallbackCookiePolicyFeatureEnabled":false,"isPrivacyPolicyNotificationFeatureEnabled":false,"isRecaptchaFeatureEnabled":true,"isReviewsFeatureEnabled":false,"isMobileDeeplinkFeatureEnabled":true,"isAppleLoginFeatureEnabled":true,"isFacebookLoginFeatureEnabled":true,"isGoogleLoginFeatureEnabled":true,"isQaAttributesFeatureEnabled":false,"isReadRecentUserQueryFeatureEnabled":true,"isRecommenderFeatureEnabled":true,"isCategorySuggestFeatureEnabled":true,"isQuickSearchWidgetForRealEstateEnabled":true,"isQuickSearchWidgetForAutoMotoEnabled":true,"isEscrowFeatureEnabled":true,"isNjupopCataloguesFeatureEnabled":false},"applicationHash":"fc1df9032ec5c80a8300fa7c7fdf505f","applicationVersion":"20.120.1"}};
+        var app3k = app;
+
+        var js_app_rewrite_base = "\/";
+        var js_app_application_server = "www.bolha.com";
+        var js_app_static_server = "https:\/\/static.bolha.com\/";
+        var js_cookie_domain = ".bolha.com";
+        var filter_qstr = null;
+        var controller_name = "fw3k2_controller";
+
+        
+                    
+
+                
+                    app.boot.push({"name":"ProcessApiCalls","values":{"apiQueueCacheKey":"api:0:f16f7454b702a8138ca15a533f8b3a69","matchedRoute":"login"}});
+                    app.boot.push({"name":"LocationMapsService","values":{"locationMapsServiceName":"Mireo","locationMapsServiceSettings":{"mapStyle":"mireo-maps-style"}}});
+                    app.boot.push({"name":"PaginationBaseData","values":{"adjustedCanonicalUrl":""}});
+                    app.boot.push({"name":"MobileDeeplink","values":{"deeplinkProviderUrl":"https:\/\/bolha.page.link","androidAppIdentifier":"net.trikoder.android.bolha","iosAppIdentifierName":"net.trikoder.iphone.bolha","iosAppId":1540081488}});
+                
+        
+                    app.boot.push({"name":"PrivacyPolicyNotice","values":[]});
+            </script>
+
+    <script>
+        window.fbAsyncInit = function () {
+            window.FB.init({
+                appId: String(538227887019820),
+                version: 'v2.8',
+                xfbml: false,
+                cookie: true
+            });
+            window.dispatchEvent(new CustomEvent('fbReady'));
+        };
+    </script>
+
+            
+            
+                <link rel="preconnect" href="https://sdk.privacy-center.org" crossorigin />
+        <link rel="dns-prefetch" href="https://sdk.privacy-center.org" />
+    
+
+<script>
+
+    window.gdprAppliesGlobally=true;
+
+    (function(){function a(e){if(!window.frames[e]){if(document.body&&document.body.firstChild){var t=document.body;var n=document.createElement("iframe");n.style.display="none";n.name=e;n.title=e;t.insertBefore(n,t.firstChild)}
+    else{setTimeout(function(){a(e)},5)}}}function e(n,r,o,c,s){function e(e,t,n,a){if(typeof n!=="function"){return}if(!window[r]){window[r]=[]}var i=false;if(s){i=s(e,t,n)}if(!i){window[r].push({command:e,parameter:t,callback:n,version:a})}}e.stub=true;function t(a){if(!window[n]||window[n].stub!==true){return}if(!a.data){return}
+    var i=typeof a.data==="string";var e;try{e=i?JSON.parse(a.data):a.data}catch(t){return}if(e[o]){var r=e[o];window[n](r.command,r.parameter,function(e,t){var n={};n[c]={returnValue:e,success:t,callId:r.callId};a.source.postMessage(i?JSON.stringify(n):n,"*")},r.version)}}
+    if(typeof window[n]!=="function"){window[n]=e;if(window.addEventListener){window.addEventListener("message",t,false)}else{window.attachEvent("onmessage",t)}}}e("__tcfapi","__tcfapiBuffer","__tcfapiCall","__tcfapiReturn");a("__tcfapiLocator");})();
+
+    window.didomiOnReady = window.didomiOnReady || [];
+    window.didomiOnReady.push(function(Didomi) {
+
+        
+        window.closeDidomiNotice = function() {
+            Didomi.notice.hide();
+        }
+    });
+
+</script>
+<script async id="spcloader" src="https://sdk.privacy-center.org/6bde9311-5cb5-4ec1-b211-eb8c953c07f5/loader.js?target=www.bolha.com"></script>
+
+            
+                <script type="didomi/html" data-vendor="c:dotmetric-3QmhbtXk">
+            <link rel="preconnect" href="https://script.dotmetrics.net" crossorigin />
+            <link rel="dns-prefetch" href="https://script.dotmetrics.net" />
+        </script>
+    
+
+<script type="didomi/javascript" data-vendor="c:dotmetric-3QmhbtXk" >
+/* <![CDATA[ */
+(function() {
+    window.dm=window.dm||{AjaxData:[]};
+    window.dm.AjaxEvent=function(et,d,ssid,ad){
+    dm.AjaxData.push({et:et,d:d,ssid:ssid,ad:ad});
+    if(typeof window.DotMetricsObj != 'undefined') {DotMetricsObj.onAjaxDataUpdate();}
+    };
+    var d=document,
+    h=d.getElementsByTagName('head')[0],
+    s=d.createElement('script');
+    s.type='text/javascript';
+    s.async=true;
+    s.src='https://script.dotmetrics.net/door.js?id=2124';
+    h.appendChild(s);
+}());
+/* ]]> */
+</script>
+
+            
+                <script type="didomi/html" data-vendor="c:hotjar">
+            <link rel="preconnect" href="//static.hotjar.com" crossorigin />
+            <link rel="dns-prefetch" href="//static.hotjar.com" />
+        </script>
+    
+
+<script type="didomi/javascript" data-vendor="c:hotjar"  >
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1864642,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+            
+            
+                <link rel="preconnect" href="https://cdn.perfdrive.com" crossorigin />
+        <link rel="dns-prefetch" href="https://cdn.perfdrive.com" />
+    
+                <link rel="preconnect" href="https://cas.avalon.perfdrive.com" crossorigin />
+        <link rel="dns-prefetch" href="https://cas.avalon.perfdrive.com" />
+    
+
+<script>
+  (function(w, d, e, u, c, g, a, b){
+    w["SSJSConnectorObj"] = w["SSJSConnectorObj"] || {ss_cid : c, domain_info: "auto"};
+    w[g] = function(i, j){w["SSJSConnectorObj"][i] = j};
+    a = d.createElement(e);
+    a.async = true;
+    a.src = u;
+    b = d.getElementsByTagName(e)[0];
+    b.parentNode.insertBefore(a, b);
+
+  })(window,document,"script","https://cdn.perfdrive.com/aperture/aperture.js","brkp","ssConf");
+
+    ssConf("c1" , "https://cas.avalon.perfdrive.com");
+</script>
+
+            
+
+                <script type="didomi/html" data-vendor="didomi:google">
+            <link rel="preconnect" href="https://ssl.google-analytics.com" crossorigin />
+            <link rel="dns-prefetch" href="https://ssl.google-analytics.com" />
+        </script>
+    
+                <script type="didomi/html" data-vendor="didomi:google">
+            <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+            <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        </script>
+    
+
+<script type="didomi/javascript" data-vendor="didomi:google" >
+    window._gaq = window._gaq || [];
+    _gaq.push(['_setAccount', 'UA-9594536-1']);
+    _gaq.push(['_setDomainName', '.bolha.com']);
+    _gaq.push(['_setCampaignCookieTimeout', 0]);
+
+    
+    _gaq.push(['_trackPageview','']);
+    _gaq.push(['_trackPageLoadTime']);
+
+    </script>
+<script type="didomi/javascript" data-vendor="didomi:google"  async src="https://ssl.google-analytics.com/ga.js"></script>
+
+    
+
+    <link rel="stylesheet" href="https://static.bolha.com/dist/d0f0901774.css" />
+                                            <link rel="stylesheet" href="https://static.bolha.com/dist/3354c4a9c9.css" />
+
+        <script >window.boot_21444c712e=()=>{window.app??={},window.app.initialErrors??=[],(()=>{const o=document.documentElement;if(window.CSS?.supports?.("(font:-apple-system-body) and (-webkit-touch-callout:none) and (-webkit-tap-highlight-color:hotpink)")){const o=document.querySelector('meta[name="viewport"]');null!==o&&(o.content=`${o.content},user-scalable=no`)}try{document.querySelector(":focus-visible")}catch(t){o.classList.add("no-focusvisible")}o.classList.remove("no-js"),o.classList.add("js")})(),delete window.boot_21444c712e},window.boot_21444c712e();
+</script>
+                                                
+    
+                    
+        
+        
+            <script>
+            app.boot.push({"name":"BannerManager","values":{"context":[]}});
+        </script>
+    
+                    
+</head>
+
+<body >
+            
+                <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    
+
+<!-- Google Tag Manager -->
+<script>
+window.dataLayer = window.dataLayer || [];
+</script>
+
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-NZKLMSC" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NZKLMSC');</script>
+<!-- End Google Tag Manager -->
+
+
+    <div id="fb-root"></div>
+
+    
+
+<script>
+app.boot.push({"name":"UserLogin","values":{"el":"#login","fields":{"username":"#login_username","password":"#login_password","useFacebookAccount":"#login_useFacebookAccount","fbLoginActive":"#login_fbLoginActive"}}});
+app.boot.push({"name":"FacebookLogin","values":{"type":"login","loginUserOnInit":0,"registrationUrl":"https:\/\/www.bolha.com\/registracija\/","returnUrl":"https:\/\/www.bolha.com\/avto-oglasi\/mercedes"}});
+</script>
+
+<div class="wrap-main">
+        <header class="Header">
+        <div class="Header-mainControls">
+            <a
+                class="Header-logo"
+                href="https://www.bolha.com/"
+                
+            >
+                Naslovna stran
+            </a>
+                                    <a
+                class="Header-submitClassified is-small"
+                href="https://www.bolha.com/objava-oglasa/"
+                
+            >
+                <span class="Header-submitClassifiedInner">
+                    Objava oglasa
+                </span>
+            </a>
+                        <button class="Header-toggleNavBtn" type="button">
+                Odpri meni
+            </button>
+                    </div>
+                    
+<nav class="Header-mainNav is-nonLoggedUser">
+        
+<ul class="Header-authNav">
+        <li class="Header-authNavListItem">
+        <a
+            class="Header-authNavItem Header-authNavItem--login is-interactive is-active"
+            href="https://www.bolha.com/prijava/"
+            
+        >
+            Prijava
+        </a>
+    </li>
+    <li class="Header-authNavListItem">
+        <a
+            class="Header-authNavItem Header-authNavItem--register is-interactive"
+            href="https://www.bolha.com/registracija/"
+            
+        >
+            Registracija
+        </a>
+    </li>
+    </ul>
+
+    <button class="Header-closeNavBtn" type="button">
+        Zapri meni
+    </button>
+</nav>
+
+            </header>
+    <script>
+        app.boot.push({"name":"Header","values":[]});
+    </script>
+
+            <div class="Attention HeaderSpotlight" data-nosnippet>
+            <!-- brez skrbi -->
+<style>
+  :root {
+    --gap: 15px;
+
+    /* Slide 1 */
+    --slide1-bclr: #fdcd00;
+    --slide1-clr: #303841;
+    --slide1-fs: clamp(15px, 2.5vw, 18px);
+
+    --slide1-bclr-cta: #f06e1e;
+    --slide1-clr-cta: #fff;
+    --slide1-clr-border-cta: #f06e1e;
+
+    --slide1-bclr-cta-hover: #303841;
+    --slide1-clr-cta-hover: #fff;
+    --slide1-clr-border-cta-hover: #303841;
+    --slide1-fs-cta: clamp(11px, 2vw, 13px);
+
+    --slide1-image-width: 45px;
+    --slide1-image-height: 45px;
+  }
+
+  .carousel__viewport,
+  .carousel__slide {
+    margin: 0;
+    padding: 0;
+  }
+
+  .carousel__slide1 {
+    background-color: var(--slide1-bclr);
+  }
+
+  /* carousel content */
+
+  .carousel__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+    padding: 10px;
+  }
+
+  @media (min-width: 728px) {
+    .carousel__grid {
+      display: grid;
+      gap: var(--gap);
+      grid-template-columns: 0.3fr 5fr 1fr;
+      padding: 10px;
+    }
+  }
+
+  .carousel {
+    position: relative;
+    overflow: hidden;
+    font-family: inherit;
+    border-radius: 4px;
+    max-width: 1300px;
+    margin-inline: auto;
+    line-height: 1.5;
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .carousel__images {
+    max-width: 100%;
+    display: block;
+  }
+
+  .slide1_heading {
+    margin: 0;
+    font-weight: 400;
+    text-align: center;
+    margin-block-end: 1em;
+    font-size: var(--slide1-fs);
+    color: var(--slide1-clr);
+    text-shadow: 1px 0px 1px rgba(81, 67, 21, 0.8);
+  }
+
+  @media (min-width: 728px) {
+    .slide1_heading {
+      text-align: left;
+      margin-block-end: 0em;
+    }
+  }
+
+  .slide1_cta:link,
+  .slide1_cta:visited {
+    text-decoration: none;
+    padding: 0.6em 0.8em;
+    position: relative !important;
+    z-index: 999 !important;
+    display: block;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 1px 0px 1px rgba(81, 67, 21, 0.8);
+  }
+  .carousel:hover .slide1_cta,
+  .carousel:hover .slide2_cta {
+    transform: rotateY(360deg);
+  }
+  .slide1_cta:link,
+  .slide1_cta:visited {
+    font-size: var(--slide1-fs-cta);
+    color: var(--slide1-clr-cta);
+    background-color: var(--slide1-bclr-cta);
+    box-shadow: 0 0px 2px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s ease-in-out;
+  }
+
+  .slide1_cta:hover,
+  .slide1_cta:active,
+  .slide1_cta:focus {
+    background: var(--slide1-bclr-cta-hover);
+    color: var(--slide1-clr-cta-hover);
+    text-decoration: none;
+    box-shadow: 0 0px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .slide1-image {
+    display: none;
+  }
+
+  @media (min-width: 728px) {
+    .slide1-image {
+      display: block;
+      width: var(--slide1-image-width);
+      min-width: var(--slide1-image-width);
+      height: var(--slide1-image-height);
+      min-height: var(--slide1-image-height);
+      object-fit: contain;
+      border: 1.5px solid var(--slide1-clr);
+      border-radius: 50%;
+    }
+  }
+
+  .slide__accent-color {
+    color: var(--slide1-bclr-cta);
+    font-weight: 700;
+  }
+</style>
+<section class="carousel">
+  <div class="carousel__viewport">
+    <div id="carousel__slide1" class="carousel__slide carousel__slide1">
+      <div class="carousel__grid">
+        <div class="carousel__grid--left">
+          <img
+            src="https://www.bolha.com/3d/icons/brez-skrbi/brezskrbi_ikona.png"
+            alt=""
+            class="carousel__images slide1-image"
+          />
+        </div>
+
+        <div class="carousel__grid--middle">
+          <h3 class="slide1_heading">
+            Prodaj izdelek bolj enostavno. BREZPLAČNO, BREZ VEZAVE. BREZ SKRBI.
+            <strong> Vklopi BREZ SKRBI</strong>.
+          </h3>
+        </div>
+        <div class="carousel__grid--right">
+          <a class="slide1_cta" href="https://bit.ly/4d58mAg"> Oddaj oglas </a>
+        </div>
+      </div>
+      <div class="carousel__snapper"></div>
+    </div>
+  </div>
+</section>
+<!-- brez skrbi end -->
+
+
+
+<br>
+<!-- header pasica start -->
+<style>
+  .header__container {
+    text-decoration: none;
+  }
+
+  .header__image {
+    max-width: 100%;
+    display: block;
+  }
+
+  .header__picture--desktop,
+  .header__picture--mobile {
+    border-radius: 4px;
+  }
+
+  .header__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .header__picture--mobile {
+    display: block;
+  }
+  .header__picture--desktop {
+    display: none;
+  }
+
+  @media (min-width: 690px) {
+    .header__picture--mobile {
+      display: none;
+    }
+    .header__picture--desktop {
+      display: block;
+    }
+  }
+</style>
+<a
+  href="https://www.bolha.com/index.php?ctl=show_static_page&alias=katalogi&open=Hervis"
+  target="_blank"
+  class="header__container"
+>
+  <div class="header__content">
+    <img
+      class="header__image header__picture--mobile"
+      src="https://www.bolha.com/3d/banneri/headerpasica/hervis20240422/mobile.png"
+      alt="Oglasna pasica"
+    />
+    <img
+      class="header__image header__picture--desktop"
+      src="https://www.bolha.com/3d/banneri/headerpasica/hervis20240422/desktop.png"
+      alt="Oglasna pasica"
+    />
+  </div>
+</a>
+<!-- header pasica end -->
+
+
+        </div>
+    
+    <div class="wrap-content ContentLayout ContentLayout--delta cf">
+        <div class="content-primary">
+            <main role="main">
+                <div class="Focus">
+                    <div class="ContentHeader ContentHeader--beta">
+                        <header class="ContentHeader-inner">
+                            <h1 class="ContentHeader-title">Prijava</h1>
+                        </header>
+                        <div class="ContentHeader-description auth-cta">
+                            <p>
+                                                        Še nimate profila na bolha.com? <a href="https://www.bolha.com/registracija/">Registracija <span aria-hidden="true" role="presentation">&#187;</span></a>
+                            </p>
+                        </div>
+                    </div>
+                            <form name="login" method="post" action="/prijava/?returnUrl=https://www.bolha.com/avto-oglasi/mercedes" id="login" novalidate="novalidate" >
+
+                                                                                <div class="block-standard block-standard--gamma">
+                        <div class="UserAuthenticationLogin">
+                            <div class="UserAuthenticationLogin-option UserAuthenticationLogin-option--standard">
+                                <div class="chunk chunk--enlarged">
+                                    <div class="form-standard form-standard--focused">
+                                        <fieldset class="form-fieldset">
+                                            <div class="form-items">
+
+                                                                                                                                                                                                    
+    
+    
+            
+                        
+                
+        
+            
+                
+    
+                
+    
+        
+        
+    
+                        <div              
+        class="form-item"
+    >
+                                                                    
+        
+    
+                <label class="form-label" for="login_username" >Uporabniško ime</label>
+    
+
+                                                <div class="form-field">
+                        
+                
+        
+        
+        
+                
+    <input type="text" 
+        
+    
+            
+                
+    
+    id="login_username" name="login[username]" data-hj-masked=""  class="form-field-textual form-field-text  form-field-textual--l"   
+
+>
+
+
+                </div>
+                                                            </div>
+            
+
+
+                                                                                                
+    
+    
+            
+                
+                
+        
+            
+                
+    
+                
+    
+        
+        
+    
+                        <div              
+        class="form-item"
+    >
+                                                                    
+        
+    
+                <label class="form-label" for="login_password" >Geslo</label>
+    
+
+                                                <div class="form-field">
+                            <div class="Password">
+            
+                
+        
+        
+        
+                
+    <input type="password" 
+        
+    
+            
+                
+    
+    id="login_password" name="login[password]" data-hj-masked=""  class="form-field-textual form-field-text  form-field-textual--m"   
+
+>
+
+
+    </div>
+
+                </div>
+                                                                <div class="form-field-hint form-field-hint--help" >
+                                                                        <a href="https://www.bolha.com/poslji-geslo/?returnUrl=https://www.bolha.com/prijava/">
+                                                        Pozabljeno geslo ali uporabniško ime?
+                                                    </a>
+                                                
+                </div>
+                            </div>
+            
+
+
+                                                <div class="form-item-group">
+                                                                                                        
+    
+    
+            
+                        
+                
+        
+            
+                
+    
+                
+    
+        
+        
+    
+                        <div              
+        class="form-item form-item--beta"
+    >
+                                                                                                    <label class="form-label form-label--as-field form-label--custom-togglable " for="login_remember_me">
+        <span class="Togglable Togglable--checkbox"><input type="checkbox" 
+        
+    
+            
+                
+    
+    id="login_remember_me" name="login[remember_me]" class="form-field-choice"    
+
+ value="1" checked="checked"><i class="Togglable-input" aria-hidden="true" role="presentation"></i></span> <span class="form-label-caption">Zapomni si me (30 dni)</span>    </label>
+
+                                            </div>
+            
+
+                                                </div>
+
+                                            </div>
+                                        </fieldset>
+                                        <div class="form-actions">
+                                            <div class="form-actions-collection form-actions-collection--col-01 form-actions-collection--ltr">
+                                                <div class="inner-form-actions-collection">
+                                                    <div class="wrap-form-action">
+                                                        
+                
+                    <button type="submit" id="login_login" name="login[login]"  class="form-action form-action--submit button-standard button-standard--alpha bp-radix__button-standard--full">Prijava</button>
+    
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="UserAuthenticationLogin-option UserAuthenticationLogin-option--alternate">
+                                                                    <div class="ThirdPartyConnectLogin"></div>
+<script>
+    app.boot.push({"name":"ThirdPartyConnectLogin","values":{"el":".ThirdPartyConnectLogin","registrationUrl":"https:\/\/www.bolha.com\/registracija\/kupec\/","returnUrl":"https:\/\/www.bolha.com\/avto-oglasi\/mercedes","thirdPartyAccountsRedirectURI":"https:\/\/www.bolha.com\/third-party-redirect-uri\/","appleSignInClientId":"prod.bolha.com","googleSignInClientId":"932544843046-b53simsu4r3vc7ienqrnvlh1nodm22mh.apps.googleusercontent.com","xitiTrackingParameters":{"prefix":"prijava","inactive":"user_neaktiven","fail":"fail","login_facebook":"prijava_prek_facebooka","login_google":"prijava_prek_googlea","login_apple":"prijava_prek_applea","action_login_facebook":"prijava_prek_facebooka","action_login_google":"prijava_prek_googlea","action_login_apple":"prijava_prek_applea"}}});
+</script>
+
+                                                            </div>
+                        </div>
+                    </div>
+                        
+                        
+        
+        
+        
+    
+    <input type="hidden" 
+        
+    
+            
+                
+    
+    id="login_useFacebookAccount" name="login[useFacebookAccount]"    
+
+>
+
+
+                        
+                        
+        
+        
+        
+    
+    <input type="hidden" 
+        
+    
+            
+                
+    
+    id="login_fbLoginActive" name="login[fbLoginActive]"    
+
+>
+
+
+                                                                                                                        
+                        
+        
+        
+        
+    
+    <input type="hidden" 
+        
+    
+            
+                
+    
+    id="login__token" name="login[_token]"    
+
+ value="317dcebf70698a3.bgkNOtFs73hpwzNbKXHtqLYo_H2aX92GOu6OxVOmwf4.P11-QuUWjikmhF8seCio0IFSmynYO7iyDdfPgRvf7K0eYiBotBilHCqGVA">
+
+
+            </form>
+                </div>
+            </main>
+        </div>
+    </div>
+        <footer class="Footer Footer--reduced">
+        <div class="Footer-sections">
+            <div class="Footer-section">
+                <h4 class="Footer-sectionTitle">
+                    Uporabne povezave
+                </h4>
+                <ul class="Footer-linkList">
+                    <li class="Footer-linkListItem"><a class="link" href="https://www.bolha.com/?topic_id=1&ctl=help">Stik in pomoč</a></li>
+                    <li class="Footer-linkListItem"><button type="button" class="link" id="js-veza-o_nama">O nas</button></li>
+                    <li class="Footer-linkListItem"><button type="button" class="link" id="js-veza-oglasavanje">Oglaševanje</button></li>
+                    <li class="Footer-linkListItem"><button type="button" class="link" id="js-veza-uvjeti_koristenja">Pravila in pogoji uporabe</button></li>
+                    <li class="Footer-linkListItem"><a class="link" href="https://www.bolha.com/index.php?ctl=show_static_page&amp;alias=privacy_policy">Politika zasebnosti</a></li>
+                                        <li class="Footer-linkListItem"><button type="button" class="link js-veza-podesavanje_kolacica">Nastavitve piškotkov</button></li>
+                                        <li class="Footer-linkListItem"><button type="button" class="link" id="js-veza-nacin_placanja">Načini plačila</button></li>
+                    <li class="Footer-linkListItem"><a class="link" href="https://www.bolha.com/zemljevid-strani/">Zemljevid strani</a></li>
+                    <li class="Footer-linkListItem"><a class="link" href="https://www.bolha.com/objava-oglasa/">Objavite oglas</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="Footer-bottomBar">
+            <p class="Footer-copyright">
+                &copy; 2002 - 2024 Styria digital marketplaces d.o.o.
+            </p>
+        </div>
+    </footer>
+    <script>
+        app.boot.push({"name":"Footer","values":[]});
+    </script>
+
+</div>
+
+    
+        
+    <script crossorigin type="module" src="https://static.bolha.com/dist/c28b6018e8.js"></script>
+                                            <script crossorigin type="module" src="https://static.bolha.com/dist/cd0f822057.js"></script>
+
+    <script crossorigin type="module" src="https://static.bolha.com/dist/veze_b381b15cc2.js"></script>
+
+    
+            
+            
+                <link rel="preconnect" href="//islpronto.islonline.net" crossorigin />
+        <link rel="dns-prefetch" href="//islpronto.islonline.net" />
+    
+
+                                            <div class="LiveChatActivator LiveChatActivator--isl-pronto">
+            <button type="button" class="LiveChatActivator-button">Live chat</button>
+        </div>
+    
+            
+
+<script>
+    window.app.liveChat = {
+        type: 'isl-pronto',
+        load: function () {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.async = true;
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(script, s);
+            script.onload = function() {
+                setTimeout( function() {
+                        if (ISLProntoInfo.supporters > 0) {
+                            ISLProntoInfo.onchat();
+                        } else {
+                            window.location.href = "mailto:podpora@bolha.com?subject=Pogovor%20v%20%C5%BEivo&body=Pozdravljeni%2C%0D%0A%0D%0Aveseli%20nas%2C%20da%20ste%20%C5%BEeleli%20uporabiti%20na%C5%A1o%20storitev%20Pogovor%20v%20%C5%BEivo.%0D%0AKer%20na%C5%A1a%20marljiva%20ekipa%2C%20ki%20skrbi%20za%20podporo%20uporabnikom%2C%20trenutno%20ni%20dosegljiva%2C%20vas%20prosimo%2C%20da%20nam%20svoje%20vpra%C5%A1anje%20sporo%C4%8Dite%20kar%20po%20elektronski%20po%C5%A1ti.%20Potrudili%20se%20bomo%2C%20da%20vam%20bomo%20%C4%8Dim%20prej%20odgovorili.%0D%0A%0DMimogrede%3A%20prijazna%20ekipa%2C%20ki%20na%20bolha.com%20nudi%20podporo%20uporabnikom%2C%20je%20dosegljiva%20vsak%20dan%20med%208.%20in%2017.%20uro.%0D%0AVa%C5%A1a%20bolha.com%0D%0A%0D%0AVa%C5%A1e%20vpra%C5%A1anje%20napi%C5%A1ite%20tukaj%3A";
+                        }
+                }, 500);
+            };
+            script.src = "//islpronto.islonline.net/live/islpronto/public/chat_info.js?d=bolha&lang=sl&c=bolha-com&chat_width=450&chat_height=370&nocookies=1";
+        }
+    };
+</script>
+
+            
+
+
+
+
+                <script type="didomi/html" data-vendor="c:xiti-CzN7zA4y">
+            <link rel="preconnect" href="https://logs128.xiti.com" crossorigin />
+            <link rel="dns-prefetch" href="https://logs128.xiti.com" />
+        </script>
+    
+                <script type="didomi/html" data-vendor="c:xiti-CzN7zA4y">
+            <link rel="preconnect" href="https://tag.aticdn.net" crossorigin />
+            <link rel="dns-prefetch" href="https://tag.aticdn.net" />
+        </script>
+    
+
+<script type="didomi/javascript" data-vendor="c:xiti-CzN7zA4y" >
+    function initializePianoAnalytics() {
+        window._pac = window._pac || {};
+        window._paq = window._paq || [];
+
+        _pac.site = '413864';
+        _pac.collectDomain = 'https://logc173.xiti.com';
+
+        _paq.push(["setUser","",null,true]);
+        _paq.push(["setProperties",{"x1":"other","x2":"transaction","x3":"Login_area","x4":"","x15":"not_logged_in","logged_in":"not_logged_in"},{"persistent":true,"events":["page.display"]}]);
+        _paq.push(["setProperties",[],{"persistent":true,"events":["click.action","click.navigation"]}]);
+        _paq.push(["setProperties",{"page":"prijava","site_level2":"Login_area"},{"persistent":true,"events":["click.action","click.navigation","view.impression","page.display"]}]);
+
+        function sendEvent() {
+                        _paq.push(["sendEvent","page.display"]);
+                                }
+
+                sendEvent();
+        
+            }
+        window.initializePianoAnalytics();
+    </script>
+<script type="didomi/javascript" data-vendor="c:xiti-CzN7zA4y"  async src="https://tag.aticdn.net/piano-analytics.js"></script>
+
+</body>
+</html>
