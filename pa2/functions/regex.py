@@ -64,16 +64,40 @@ def sport_tv(html):
     published_date_regex = re.compile(r'<div class="post-date pull-left">\s*<span>(.*?)<\/span>')
 
     content_regex = re.compile(
-        r'<div class="clearfix"></div>\s*<div.*?>(.*?)<style>',
+        r'</div>\s*<div class="clearfix"></div>\s*<p>(.*?)<br>',
         re.DOTALL)
 
     data = {
         'Title': re.findall(title_regex, html)[0],
-        # 'Subtitle': re.findall(subtitle_regex, html)[0],
         'Lead': re.findall(lead_regex, html)[0],
         'Content': re.findall(content_regex, html)[0],
         'Author': re.findall(author_regex, html)[0],
         'PublishedDate': re.findall(published_date_regex, html)[0]
+    }
+
+    return data
+
+
+def bolha(html):
+    title_regex = re.compile(r'<h3 class="entity-title"><a .*?href="\/avto-oglasi\/.*?>(.*?)<\/a><\/h3>')
+
+    price_regex = re.compile(r'<strong class="price price--hrk">\s*([\d.]+)\s*&nbsp;')
+
+    time_regex = re.compile(r'<time[^>]*>(.*?)</time>')
+
+    location_regex = re.compile(r'<span[^>]*>Lokacija vozila: <\/span>(.*?)<br>')
+
+    state_regex = re.compile(r'<div class="entity-description-main">\s*(.*?)<br>')
+
+    year_regex = re.compile(r'Leto izdelave:\s*(\d{4})')
+
+    data = {
+        'Title': re.findall(title_regex, html)[0],
+        'Price': re.findall(price_regex, html)[0],
+        'Time': re.findall(time_regex, html)[0],
+        'VehicleLocation': re.findall(location_regex, html)[0],
+        'VehicleState': re.findall(state_regex, html)[0],
+        'Year': re.findall(year_regex, html)[0],
     }
 
     return data
