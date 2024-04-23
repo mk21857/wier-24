@@ -1,5 +1,6 @@
 import sys
 import regex
+import xpath
 import os
 
 
@@ -35,15 +36,24 @@ bolha_avto_oglasi_renault = open(bolha_avto_oglasi_renault_path, encoding='utf-8
 algo = sys.argv[1]
 
 if algo == 'A':
-    print('OVERSTOCK 1', regex.overstock(html_overstock_jewelery1), end='\n\n')
-    print('OVERSTOCK 2',regex.overstock(html_overstock_jewelery2), end='\n\n')
+    #print('OVERSTOCK 1', regex.overstock(html_overstock_jewelery1), end='\n\n')
+    #print('OVERSTOCK 2',regex.overstock(html_overstock_jewelery2), end='\n\n')
     print('RTVSLO 1', regex.rtv(html_rtv_audi), end='\n\n')
-    print('RTVSLO 2', regex.rtv(html_rtv_volvo), end='\n\n')
-    print('SPORT-TV 1', regex.sport_tv(html_sport_tv_doncic_1), end='\n\n')
-    print('SPORT-TV 2', regex.sport_tv(html_sport_tv_doncic_2), end='\n\n')
-    print('BOLHA 1', regex.bolha(bolha_avto_oglasi_mercedes), end='\n\n')
-    print('BOLHA 2', regex.bolha(bolha_avto_oglasi_renault), end='\n\n')
-elif algo == 'B':
+    #print('RTVSLO 2', regex.rtv(html_rtv_volvo), end='\n\n')
+    #print('SPORT-TV 1', regex.sport_tv(html_sport_tv_doncic_1), end='\n\n')
+    #print('SPORT-TV 2', regex.sport_tv(html_sport_tv_doncic_2), end='\n\n')
+    #print('BOLHA 1', regex.bolha(bolha_avto_oglasi_mercedes), end='\n\n')
+    #print('BOLHA 2', regex.bolha(bolha_avto_oglasi_renault), end='\n\n')
     print('')
+elif algo == 'B':
+    #print('OVERSTOCK 1', xpath.overstock(html_overstock_jewelery1), end='\n\n')
+    #print('OVERSTOCK 2', xpath.overstock(html_overstock_jewelery2), end='\n\n')
+    #print('RTVSLO 1', xpath.rtv(html_rtv_audi), end='\n\n')
+    #print('RTVSLO 2', xpath.rtv(html_rtv_volvo), end='\n\n')
+    #print('SPORT-TV 1', xpath.sport_tv(html_sport_tv_doncic_1), end='\n\n')
+    #print('SPORT-TV 2', xpath.sport_tv(html_sport_tv_doncic_2), end='\n\n')
+    #print('BOLHA 1', xpath.bolha(bolha_avto_oglasi_mercedes), end='\n\n')
+    #print('BOLHA 2', xpath.bolha(bolha_avto_oglasi_renault), end='\n\n')
+    print()
 elif algo == 'C':
     print('')
