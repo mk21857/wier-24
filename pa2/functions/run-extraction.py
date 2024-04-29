@@ -1,6 +1,7 @@
 import sys
 import regex
 import xpath
+import road_runner
 import os
 
 
@@ -56,4 +57,6 @@ elif algo == 'B':
     #print('BOLHA 2', xpath.bolha(bolha_avto_oglasi_renault), end='\n\n')
     print()
 elif algo == 'C':
+    print(road_runner.road_runner(html_overstock_jewelery1, html_overstock_jewelery2))
+    print(road_runner.road_runner(html_rtv_audi, html_rtv_volvo))
     print('')
