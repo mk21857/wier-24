@@ -3,6 +3,7 @@ import regex
 import xpath
 import road_runner
 import os
+from neki import RoadRunner
 
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -57,6 +58,14 @@ elif algo == 'B':
     #print('BOLHA 2', xpath.bolha(bolha_avto_oglasi_renault), end='\n\n')
     print()
 elif algo == 'C':
-    print(road_runner.road_runner(html_overstock_jewelery1, html_overstock_jewelery2))
-    print(road_runner.road_runner(html_rtv_audi, html_rtv_volvo))
-    print('')
+    sites_to_parse = [
+        {
+            'type': 'overstock',
+            'pages': [html_rtv_audi, html_rtv_volvo]
+        }
+    ]
+    roadrunner = RoadRunner(sites_to_parse)
+    roadrunner.start()
+    # print(road_runner.road_runner(html_overstock_jewelery1, html_overstock_jewelery2))
+    # print(road_runner.road_runner(html_rtv_audi, html_rtv_volvo))
+    # print('')
