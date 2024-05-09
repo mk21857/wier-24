@@ -2,7 +2,132 @@ from bs4 import BeautifulSoup
 
 # TODO: preskoči tag script, style, meta, link, head
 
-disallowed_tags = ['script', 'style', 'meta', 'link', 'head']
+allowed_tags = ['div', 'h1', 'h2', 'p', 'title', 'table', 'html', 'body']
+
+
+class Node:
+    def __init__(self, tag, text, classes, children, optional):
+        self.tag = tag
+        self.text = text
+        self.classes = classes
+        self.children = children
+        self.optional = optional
+        self.repeatable = False
+
+
+def road_runner(pages):
+    trees = []
+    for page in pages:
+        soup = BeautifulSoup(page, 'lxml')
+        tree = build_dom_tree(soup.find("html"))
+
+        trees.append(tree)
+
+    wrapper = build_generalized_tree(trees[0], trees[1])
+    print_dom_tree(None, wrapper)
+
+
+def build_dom_tree(tag):
+    node = Node(tag.name, tag.string if tag.string else None, tag.attrs.get('class', []), [], False)
+
+    if allowed_tags is None or tag.name in allowed_tags:
+        for child in tag.children:
+            if isinstance(child, str):
+                continue
+
+            if child.name in allowed_tags:
+                node.children.append(build_dom_tree(child))
+
+    return node
+
+def build_generalized_tree(tree1, tree2):
+    if tree1.tag != tree2.tag:
+        tree1.optional = True
+        return tree1
+
+    if check_string_mismatch(tree1, tree2):
+        tree1.text = "#PCDATA"
+
+    else:
+        if tree1.children:
+            for index in range(min(len(tree1.children), len(tree2.children))):
+                tree1.children[index] = build_generalized_tree(tree1.children[index], tree2.children[index])
+
+            if len(tree1.children) > len(tree2.children):
+                for index in range(len(tree2.children), len(tree1.children)):
+                    tree1.children[index].optional = True
+            else:
+                for index in range(len(tree1.children), len(tree2.children)):
+                    tree2.children[index].optional = True
+                    tree1.children.append(tree2.children[index])
+        elif tree2.children:
+            # Set children as optional
+            tree1.children = [child for child in tree2.children]
+            for child in tree1.children:
+                child.optional = True
+
+        else:
+            return tree1
+
+    return tree1
+
+def check_repeated_nodes(node1, node2):
+    if node1 is None or node2 is None:
+        return False
+
+    if node1.tag != node2.tag:
+        return False
+
+    if not node1.children and not node2.children:
+        return True
+
+    if node1.children and not node2.children or not node1.children and node2.children:
+        return False
+
+    # if node1.classes != node2.classes:
+    #     return False
+
+    for index in range(len(node1.children)):
+        repeatable = False if index >= len(node2.children) else check_repeated_nodes(
+            node1.children[index], node2.children[index])
+        if not repeatable:
+            return False
+
+    return True
+
+def check_string_mismatch(node1, node2):
+    print(node1.text, node2.text)
+    if node1.text and node2.text:
+        return node1.text != node2.text
+    return False
+
+def print_dom_tree(prev_node, node, depth=0):
+    # TODO: popravi print da bo kazalo use ()?, ()+, #PCDATA
+    if node:
+        repeated_string_opening = ""
+        repeated_string_closing = ""
+
+        if prev_node and check_repeated_nodes(prev_node, node):
+            print("repeated")
+            repeated = True
+            repeated_string_opening = "("
+            repeated_string_closing = ")+"
+
+
+        classes_str = ' '.join(node.classes)
+        opening_tag = "<" + node.tag
+        if classes_str:
+            opening_tag += ' class="' + classes_str + '"'
+        opening_tag += ">"
+        print("  " * depth + repeated_string_opening + opening_tag)
+        if node.text:
+            print("  " * (depth + 1) + node.text)
+        for child in node.children:
+            if isinstance(child, str):
+                print("  " * (depth + 1) + child)
+            else:
+                print_dom_tree(node, child, depth + 1)
+        print("  " * depth + f"</{node.tag}>" + repeated_string_closing)
 
 class RoadRunner:
     def __init__(self, sites_to_parse):
@@ -13,126 +138,16 @@ class RoadRunner:
         }
 
     def start(self):
-        for site in self.sites_to_parse:
-            page1 = site["pages"][0]
-            soup1 = BeautifulSoup(page1, 'lxml')
-            tree1 = self.build_dom_tree(soup1.find("html"))
-
-            page2 = site["pages"][1]
-            soup2 = BeautifulSoup(page2, 'lxml')
-            tree2 = self.build_dom_tree(soup2.find("html"))
-
-            generalized_tree = self.build_generalized_tree(tree1, tree2)
-
-            print(self.create_regex(generalized_tree))
-
-    def build_dom_tree(self, soup):
-        print(soup.name)
-        return None if soup.name is None or soup.name in disallowed_tags else {"tag": soup.name,
-                                               "id": soup.id if soup.id else "",
-                                               "class": soup.attrs['class'] if "class" in soup.attrs else [],
-                                               "children": list(filter(None, [self.build_dom_tree(child) for child in
-                                                                              soup.children])),
-                                               "has_closing_tag": not soup.is_empty_element,
-                                               # TODO: hrani text taga za primerjavo
-                                               "has_text": soup.string } #is not None}
-
-    def set_as_optional(self, element):
-        element["is_optional"] = True
-        element["children"] = [self.set_as_optional(child) for child in element["children"]]
-        return element
-
-    def is_optional(self, element1, element2):
-        return element1["tag"] != element2["tag"]
-
-    def build_generalized_tree(self, tree1, tree2):
-        if self.is_optional(tree1, tree2):
-            tree1 = self.set_as_optional(tree1)
-
-        else:
-            if tree1["children"]:
-                for index in range(min(len(tree1["children"]), len(tree2["children"]))):
-                    tree1["children"][index] = self.build_generalized_tree(tree1["children"][index],
-                                                                           tree2["children"][index])
-
-                if len(tree1["children"]) > len(tree2["children"]):
-                    for index in range(len(tree2["children"]), len(tree1["children"])):
-                        tree1["children"][index] = self.set_as_optional(tree1["children"][index])
-                else:
-                    for index in range(len(tree1["children"]), len(tree2["children"])):
-                        tree1["children"].append(self.set_as_optional(tree2["children"][index]))
-
-            elif tree2["children"]:
-                tree1["children"] = [self.set_as_optional(child) for child in tree2["children"]]
-
-            else:
-                return tree1
-
-        return tree1
-
-    def check_if_list(self, prev_element, next_element):
-        if prev_element is None or next_element is None:
-            return False
-
-        if prev_element["tag"] != next_element["tag"]:
-            return False
-
-        if not prev_element["children"] and not next_element["children"]:
-            return True
-
-        if prev_element["children"] and not next_element["children"] \
-                or not prev_element["children"] and next_element["children"]:
-            return False
-
-        for index in range(len(prev_element["children"])):
-            is_list = False if index >= len(next_element["children"]) else self.check_if_list(
-                prev_element["children"][index], next_element["children"][index])
-            if not is_list:
-                return False
-
-        return True
-
-    def mark_list_in_regex(self, regex, tag):
-        if regex[len(regex) - 1] == "+":
-            return regex
-
-        if regex[len(regex) - 1] == "?":
-            return regex[:len(regex) - 1] + "*"
-
-        i = regex.rfind("<" + tag + ">")
-
-        return regex[:i] + "(" + regex[i:] + ")+"
-
-    def create_regex(self, generalized_tree):
-        regex = ""
-
-        is_optional = "is_optional" in generalized_tree and generalized_tree["is_optional"]
-
-        if is_optional:
-            regex += "("
-
-        regex += "<" + generalized_tree["tag"] + ">"
-
-        # TODO: Zamenjej samo če je drugačn ku u drugem filu #PCDATA
-        if generalized_tree["has_text"]:
-            regex += generalized_tree["has_text"]
-
-        prev_element = None
-
-        for child in generalized_tree["children"]:
-            is_list = self.check_if_list(prev_element, child)
-
-            if not is_list:
-                regex += self.create_regex(child)
-            else:
-                regex = self.mark_list_in_regex(regex, child["tag"])
-
-            prev_element = child
-
-        if generalized_tree["has_closing_tag"]:
-            regex += "</" + generalized_tree["tag"] + ">"
-
-        if is_optional:
-            regex += ")?"
-
-        return regex
+        road_runner([self.sites_to_parse[0]["pages"][0], self.sites_to_parse[0]["pages"][1]])
+        # for site in self.sites_to_parse:
+        #     page1 = site["pages"][0]
+        #     soup1 = BeautifulSoup(page1, 'lxml')
+        #     tree1 = self.build_dom_tree(soup1.find("html"))
+        #
+        #     page2 = site["pages"][1]
+        #     soup2 = BeautifulSoup(page2, 'lxml')
+        #     tree2 = self.build_dom_tree(soup2.find("html"))
+        #
+        #     generalized_tree = self.build_generalized_tree(tree1, tree2)
+        #
+        #     self.create_regex(generalized_tree)
